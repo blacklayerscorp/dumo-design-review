@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#17120C">
+<title>Dumo App Prototype</title>
+<link rel="icon" href="../assets/dumo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="app.css">
+<script src="../assets/review.js" defer></script>
+</head>
+<body>
+<div class="stage">
+  <aside class="panel-side" aria-label="Screens">
+    <a class="back" href="../">← Design review hub</a>
+    <h1>dumo</h1>
+    <span class="tag" style="align-self:flex-start">Android pilot · clickable prototype · sample data</span>
+    <p>Every screen in the pilot contract. Click through like a real phone, or jump to any screen below. Press <b style="color:var(--fg)">C</b> to pin a comment anywhere.</p>
+    <nav class="flow" id="flow"></nav>
+  </aside>
+
+  <div class="phone" id="phone" data-review-anchor="phone">
+    <div class="statusbar" aria-hidden="true"><span id="clock">9:41</span><span class="ic">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.3" y="5.5" width="3" height="6.5" rx="1"/><rect x="8.6" y="3" width="3" height="9" rx="1"/><rect x="12.9" y="0" width="3" height="12" rx="1"/></svg>
+      <span style="font-size:11px">4G</span>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x=".5" y=".5" width="20" height="11" rx="3" stroke="#fff" opacity=".6"/><rect x="2" y="2" width="14" height="8" rx="1.6" fill="#fff"/><rect x="21.5" y="4" width="2" height="4" rx="1" fill="#fff" opacity=".6"/></svg>
+    </span></div>
+    <div class="screen" id="screen"></div>
+    <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+  </div>
+
+  <aside class="panel-side panel-right" aria-label="Scenario controls">
+    <h2 style="margin:0;font:800 18px var(--display)">Try a scenario</h2>
+    <p>Switch these to see how screens change for different users and phases.</p>
+    <div class="scen" id="scen"></div>
+    <button class="side-btn" id="reset" type="button">Reset prototype</button>
+    <div class="note"><b>Pilot scope first.</b> Features outside this contract (PayShap cash-out, subscriptions, Go Global subtitles, cross-posting, LIVE) are hidden by default. Turn on <b>Show later-phase features</b> to preview them, marked “Later phase”.</div>
+    <div class="note"><b>Test money only.</b> Wallet, coins and gifts use fake money. No real payment can be made from the app.</div>
+  </aside>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

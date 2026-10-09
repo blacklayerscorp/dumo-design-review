@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dumo Screen Board</title>
+<link rel="icon" href="assets/dumo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/brand.css">
+<script src="assets/review.js" defer></script>
+<style>
+  :root{--z:.5}
+  .board-head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+  .tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .seg{display:flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:3px}
+  .seg button{all:unset;cursor:pointer;padding:7px 12px;border-radius:9px;font:700 13px var(--body);color:var(--muted)}
+  .seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
+  .seg button:focus-visible{outline:2px solid var(--amber)}
+  .flow{margin:0 0 40px}
+  .flow > h2{font-size:22px;display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .flow > h2 small{font:500 13px var(--body);color:var(--muted)}
+  .flow > p{margin:0 0 14px;color:var(--muted);font-size:14px;max-width:80ch}
+  .row{display:flex;gap:22px;overflow-x:auto;padding:6px 2px 18px;scroll-snap-type:x proximity}
+  .frame{flex:none;display:flex;flex-direction:column;gap:8px;scroll-snap-align:start}
+  .frame .lbl{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:13px;font-weight:700}
+  .frame .lbl a{font-size:12px;font-weight:600;text-decoration:none}
+  .frame .lbl small{color:var(--muted);font-weight:500}
+  .shot{position:relative;width:calc(390px * var(--z));height:calc(844px * var(--z));border-radius:calc(30px * var(--z) + 6px);overflow:hidden;background:#17120C;box-shadow:0 0 0 1px var(--line),var(--shadow);display:block}
+  .shot iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform:scale(var(--z));transform-origin:0 0;pointer-events:none}
+  .shot:hover{box-shadow:0 0 0 2px var(--amber),var(--shadow)}
+  .shot.web{width:calc(1280px * var(--z) * .62);height:calc(820px * var(--z) * .62);border-radius:10px}
+  .shot.web iframe{width:1280px;height:820px;transform:scale(calc(var(--z) * .62))}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  .legend span{display:inline-flex;gap:6px;align-items:center}
+  .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+  .jump{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 24px}
+  .jump a{font-size:13px;font-weight:600;text-decoration:none;padding:5px 10px;border-radius:999px;background:var(--surface-2);color:var(--fg);border:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header class="site-head"><div class="in"><a class="brand" href="./"><img src="assets/dumo-icon.png" alt="">dumo <span class="chip">Design review</span></a><nav><a href="./">Hub</a><a href="plan.html">Plan</a><a href="questions.html">Questions</a><a href="board.html" aria-current="page">Screens</a><a href="app/">App prototype</a><a href="admin/">Admin</a><a href="design-system.html">Design system</a></nav></div></header>
+<main class="page" style="max-width:none;padding-left:24px;padding-right:24px">
+  <div class="board-head">
+    <div>
+      <span class="eyebrow">Screen board</span>
+      <h1 style="font-size:clamp(30px,5vw,44px);margin:6px 0 8px">Every screen, side by side</h1>
+      <p class="lede" style="margin:0">All pilot screens grouped by flow. Each one is the live prototype, not a picture. Click a screen to open it and try it. Press <b>C</b> to pin a comment on any screen.</p>
+    </div>
+    <div class="tools">
+      <span style="font-size:13px;color:var(--muted);font-weight:700">Zoom</span>
+      <div class="seg" role="group" aria-label="Zoom">
+        <button type="button" data-z=".38">S</button><button type="button" data-z=".5" aria-pressed="true">M</button><button type="button" data-z=".7">L</button>
+      </div>
+    </div>
+  </div>
+  <nav class="jump" id="jump" aria-label="Jump to flow"></nav>
+  <div id="flows"></div>
+</main>
+<script>
+(function(){
+  var FLOWS = [
+    { id:'onboarding', t:'Sign up and log in', n:'Milestone 1 · Milestone 5 (age check, guidelines)', d:'Cellphone number and SMS code. A date-of-birth check enforces 13+ to use and 18+ to earn. New users accept the community guidelines before they see the feed.',
+      s:[['splash','Splash'],['welcome','Welcome'],['phone','Phone number'],['otp','SMS code'],['age','Date of birth'],['age-blocked','Under 13'],['profile-setup','Create profile'],['guidelines','Community guidelines']] },
+    { id:'feed', t:'Home feed', n:'Milestone 2', d:'Vertical swipe feed with autoplay, plus For You and Following tabs. Likes, comments, share link, test gifts, and reporting and blocking from the share sheet.',
+      s:[['feed','For You'],['feed?tab=following','Following'],['feed?sheet=comments','Comments'],['feed?sheet=gift','Send a gift'],['feed?sheet=share','Share'],['feed?sheet=report','Report video'],['feed?sheet=reported','Report sent'],['feed?sheet=block','Block user']] },
+    { id:'discover', t:'Discover, search and profiles', n:'Milestone 3', d:'Search finds creators by name and videos by hashtag. Creator profiles show photo, name, handle, bio, location, video grid and follower counts, with follow and unfollow.',
+      s:[['discover','Discover'],['search?q=thandi','Search results'],['search?q=DumoChallenge&t=videos','Search · videos'],['tag/DumoChallenge','Hashtag page'],['creator/thandi.moves','Creator profile'],['creator/thandi.moves?sheet=profile-more','Profile options']] },
+    { id:'post', t:'Post a video', n:'Milestone 2', d:'Record or pick a video up to 60 seconds. Longer clips are trimmed. Add a caption and language, then post. Uploads wait for Wi-Fi when the user asks.',
+      s:[['post','Record'],['post?sheet=pick','Pick from gallery'],['post/trim','Trim to 60 s'],['post/details','Caption and settings'],['post/uploading','Uploading']] },
+    { id:'wallet', t:'Wallet (test money)', n:'Milestone 4', d:'Earnings from views, gifts and subscribers, shown in rand and clearly marked as test money. Free test coins pay for gifts, and the creator gets 70% of each gift. No real payment is possible.',
+      s:[['wallet','Wallet'],['wallet?sheet=explain','How earnings work'],['coins','Test coins']] },
+    { id:'profile', t:'Profile, settings and safety', n:'Milestones 3 and 5', d:'Own profile and editing, Data Saver, blocked accounts, and deleting your own videos and account.',
+      s:[['me','My profile'],['me/edit','Edit profile'],['watch/m1?sheet=video','Own video options'],['watch/m1?sheet=delvid','Delete video'],['settings','Settings'],['settings/data-saver','Data Saver'],['settings/blocked','Blocked accounts'],['settings?sheet=logout','Log out'],['settings/delete','Delete account'],['settings/deleted','Account deleted']] },
+    { id:'admin', t:'Admin dashboard (web)', n:'Milestones 4 and 5', d:'Moderators see users and videos, work through reports, remove content in under a minute, suspend accounts, and set the rand value per 1,000 views.', web:true,
+      s:[['login','Admin login'],['overview','Overview'],['reports','Reports queue'],['reports/R-1042','Report detail'],['videos','Videos'],['users','Users'],['users/thandi.moves','User detail'],['settings','Monetisation settings']] }
+  ];
+  var html = '', jump = '';
+  FLOWS.forEach(function(f){
+    jump += '<a href="#' + f.id + '">' + f.t + '</a>';
+    html += '<section class="flow" id="' + f.id + '"><h2>' + f.t + ' <small>' + f.s.length + ' screens · ' + f.n + '</small></h2><p>' + f.d + '</p><div class="row">' +
+      f.s.map(function(s){
+        var id = (f.web ? 'a-' : 's-') + s[0].replace(/[^a-z0-9]+/gi, '-');
+        var src = f.web ? 'admin/?frame=1#/' + s[0] : 'app/?frame=1#/' + s[0];
+        var open = f.web ? 'admin/#/' + s[0] : 'app/#/' + s[0];
+        return '<div class="frame"><div class="lbl"><span>' + s[1] + '</span><a href="' + open + '">Open ↗</a></div>' +
+          '<a class="shot' + (f.web ? ' web' : '') + '" id="' + id + '" href="' + open + '" aria-label="Open ' + s[1] + ' in the prototype"><iframe loading="lazy" tabindex="-1" title="' + s[1] + '" src="' + src + '"></iframe></a></div>';
+      }).join('') + '</div></section>';
+  });
+  document.getElementById('flows').innerHTML = html;
+  document.getElementById('jump').innerHTML = jump;
+  var saved; try { saved = localStorage.getItem('dumo-board-zoom'); } catch(e){}
+  function setZ(z){ document.documentElement.style.setProperty('--z', z); document.querySelectorAll('[data-z]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.z === z); }); try { localStorage.setItem('dumo-board-zoom', z); } catch(e){} if (window.dumoReview) window.dumoReview.render(); }
+  document.querySelectorAll('[data-z]').forEach(function(b){ b.addEventListener('click', function(){ setZ(b.dataset.z); }); });
+  if (saved) setZ(saved);
+})();
+</script>
+</body>
+</html>

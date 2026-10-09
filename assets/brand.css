@@ -1,0 +1,62 @@
+/* Dumo design-review site: shared tokens + document-page styles.
+   App prototype uses its own dark tokens (app/app.css) taken from the client prototype. */
+:root{
+  --amber:#F2A93B; --amber-deep:#A86A10; --teal:#2BB3A3; --teal-soft:#7FE0CF;
+  --coral:#E4572E; --ink:#17120C;
+  --display:'Bricolage Grotesque','Arial Black',sans-serif;
+  --body:'DM Sans','Segoe UI',Arial,sans-serif;
+
+  --bg:#FAF6EC; --surface:#FFFFFF; --surface-2:#F3EDE0; --line:#E6DCC8;
+  --fg:#17120C; --muted:#6B5D49; --accent:#A86A10; --accent-bg:#F2A93B; --on-accent:#17120C;
+  --ok:#1E7F72; --warn:#B4541F; --info:#365FB8;
+  --shadow:0 1px 2px rgba(23,18,12,.06),0 8px 24px rgba(23,18,12,.06);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#17120C; --surface:#211A12; --surface-2:#2A2117; --line:#3A2E20;
+    --fg:#FBF6EC; --muted:#C9B99F; --accent:#F2A93B; --accent-bg:#F2A93B; --on-accent:#17120C;
+    --ok:#7FE0CF; --warn:#FF9C7A; --info:#9DB6F2;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17120C; --surface:#211A12; --surface-2:#2A2117; --line:#3A2E20;
+  --fg:#FBF6EC; --muted:#C9B99F; --accent:#F2A93B; --accent-bg:#F2A93B; --on-accent:#17120C;
+  --ok:#7FE0CF; --warn:#FF9C7A; --info:#9DB6F2;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+a{color:var(--accent)}
+img{max-width:100%}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;line-height:1.15;margin:0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+/* site header shared by all document pages */
+.site-head{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.site-head .in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.site-head .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);font-family:var(--display);font-weight:800;font-size:20px}
+.site-head .brand img{width:30px;height:30px;border-radius:8px}
+.site-head nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.site-head nav a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;padding:6px 10px;border-radius:8px}
+.site-head nav a:hover{background:var(--surface-2);color:var(--fg)}
+.site-head nav a[aria-current="page"]{background:var(--surface-2);color:var(--fg);font-weight:700}
+
+.page{max-width:1180px;margin:0 auto;padding:40px 16px 120px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:19px;color:var(--muted);max-width:68ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.chip.amber{background:var(--accent-bg);color:var(--on-accent);border-color:transparent}
+.chip.teal{background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--ok);border-color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:700 15px var(--body);text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--accent-bg);color:var(--on-accent);border-color:transparent}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:700}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dumo Client Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="icon" href="assets/dumo-icon.png">
+<link rel="stylesheet" href="assets/brand.css">
+<script src="assets/review.js" defer></script>
+<style>
+  .hero{display:flex;flex-direction:column;gap:12px}
+  .hero h1{font-size:clamp(32px,5.5vw,52px);font-weight:800}
+  .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;margin-top:18px}
+  .how div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--muted)}
+  .how b{color:var(--fg);display:block;font-size:15px}
+
+  .bar{position:sticky;top:57px;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:24px -16px 0;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+  .prog{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:700}
+  .track{flex:1;height:10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+  .fill{height:100%;width:0;background:var(--accent-bg);transition:width .3s ease}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+  .filters{display:flex;flex-wrap:wrap;gap:6px}
+  .filters button{font:700 13px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:34px}
+  .filters button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .actions{display:flex;flex-wrap:wrap;gap:6px}
+  .actions .btn{height:38px;padding:0 14px;font-size:14px}
+
+  .group{margin-top:40px;scroll-margin-top:170px}
+  .group h2{font-size:24px;font-weight:800;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .group h2 small{font:500 14px var(--body);color:var(--muted)}
+  .q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:12px;display:grid;gap:10px;scroll-margin-top:170px}
+  .q.answered{border-color:color-mix(in srgb,var(--teal) 60%,var(--line))}
+  .qhead{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+  .qid{font-family:var(--display);font-weight:800;color:var(--accent);margin-right:6px}
+  .qtext{font-weight:700;font-size:17px;line-height:1.4;flex:1;min-width:min(100%,260px)}
+  .why{margin:0;font-size:14px;color:var(--muted)}
+  .assume{background:var(--surface-2);border-radius:12px;padding:10px 12px;font-size:14px}
+  .assume > b:first-child{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+  .assume a{font-weight:700}
+  .pri{font-size:11px;font-weight:800;border-radius:6px;padding:3px 8px;white-space:nowrap}
+  .pri.p1{background:color-mix(in srgb,var(--coral) 20%,transparent);color:var(--warn)}
+  .pri.p2{background:color-mix(in srgb,var(--amber) 25%,transparent);color:var(--accent)}
+  .pri.p3{background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--ok)}
+  .choice{display:flex;flex-wrap:wrap;gap:8px}
+  .choice label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;font-size:14px;font-weight:600;min-height:44px;background:var(--bg)}
+  .choice input{accent-color:var(--amber);width:18px;height:18px;margin:0}
+  .choice label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--amber) 14%,var(--surface))}
+  .q textarea{width:100%;min-height:70px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:15px/1.5 var(--body);background:var(--bg);color:var(--fg)}
+  .q textarea:focus{outline:2px solid var(--amber);outline-offset:1px}
+  .status{font-size:13px;color:var(--muted);min-height:20px}
+  .send{margin-top:48px}
+  .send .card{display:flex;flex-direction:column;gap:12px}
+  .send label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+  .send input{height:44px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:15px var(--body);background:var(--bg);color:var(--fg);max-width:420px}
+  .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;z-index:100;box-shadow:var(--shadow)}
+  [hidden]{display:none!important}
+  @media (max-width:900px){.bar{position:static;margin:24px 0 0;padding:12px 0}}
+  @media print{
+    .site-head,.bar,.rv-bar,.send,.how{display:none!important}
+    body{background:#fff;color:#000}
+    .q{break-inside:avoid;box-shadow:none;border-color:#ccc}
+    .q textarea{border:1px solid #bbb;min-height:60px}
+    .page{padding-top:0}
+  }
+</style>
+</head>
+<body>
+<header class="site-head"><div class="in"><a class="brand" href="./"><img src="assets/dumo-icon.png" alt="">dumo <span class="chip">Design review</span></a><nav><a href="./">Hub</a><a href="plan.html">Plan</a><a href="questions.html" aria-current="page">Questions</a><a href="board.html">Screens</a><a href="app/">App prototype</a><a href="admin/">Admin</a><a href="design-system.html">Design system</a></nav></div></header>
+
+<main class="page">
+  <div class="hero" id="intro">
+    <span class="eyebrow">Stage 0 · Discovery · for BP Mhlanga</span>
+    <h1>Questions before we lock the design</h1>
+    <p class="lede">The prototype is built on the assumptions below. For each question, either agree with our assumption or tell us your answer. Questions marked <b>Blocks design</b> need an answer before design sign-off. The others can wait until the build.</p>
+    <div class="how">
+      <div><b>1 · Read the assumption</b>Each one links to the screen in the prototype where you can see it.</div>
+      <div><b>2 · Agree or answer</b>Your answers save automatically in this browser as you go.</div>
+      <div><b>3 · Send</b>Email them to us, or download the file and share it on WhatsApp or email.</div>
+    </div>
+  </div>
+
+  <div class="bar" id="toolbar">
+    <div class="prog"><span id="progLabel">0 of 0 answered</span><div class="track" role="progressbar" aria-label="Questions answered" aria-valuemin="0" id="track"><div class="fill" id="fill"></div></div></div>
+    <div class="tools">
+      <div class="filters" role="group" aria-label="Filter by priority">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="p1" aria-pressed="false">Blocks design</button>
+        <button type="button" data-f="p2" aria-pressed="false">Blocks build</button>
+        <button type="button" data-f="p3" aria-pressed="false">Nice to know</button>
+        <button type="button" data-f="open" aria-pressed="false">Unanswered</button>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn primary" data-a="send">Send answers</button>
+        <button type="button" class="btn" data-a="json">Download .json</button>
+        <button type="button" class="btn" data-a="txt">Download .txt</button>
+        <button type="button" class="btn" data-a="copy">Copy</button>
+        <button type="button" class="btn" data-a="print">Print / save PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="groups"></div>
+
+  <section class="send" id="send">
+    <div class="card">
+      <h2 style="font-size:24px">Send your answers</h2>
+      <label for="who">Your name<input id="who" autocomplete="name" placeholder="e.g. BP Mhlanga"></label>
+      <div class="actions">
+        <button type="button" class="btn primary" data-a="send">Email answers</button>
+        <button type="button" class="btn" data-a="json">Download answers file</button>
+        <button type="button" class="btn" data-a="txt">Download as text</button>
+        <button type="button" class="btn" data-a="copy">Copy to clipboard</button>
+      </div>
+      <p class="status" id="sendNote">Long answers may not fit in an email. If so, attach the downloaded file as well.</p>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  var P = { p1:'Blocks design', p2:'Blocks build', p3:'Nice to know' };
+  var GROUPS = [
+    { id:'scope', title:'Scope: prototype features outside this contract', items:[
+      ['Your prototype shows "Cash out with PayShap". Real payouts are not in this contract. Should the pilot show this button as "Coming soon", or hide it?', 'Creators will ask about money first, and what they see sets their expectations.', 'Wallet shows the balance as <b>test money</b>, with a disabled "Cash out · Coming soon" button.', 'app/#/wallet', 'p1'],
+      ['The creator profile shows "Subscribe · R29/mo". Subscriptions are a later phase. Show it disabled with "Soon", or hide it?', 'A visible but unusable button can confuse viewers.', 'Shown disabled with a "Soon" label. The subscriber earnings tile shows R0.00.', 'app/#/creator/thandi.moves', 'p1'],
+      ['"Subscribers only" posting and the "Subscribers only" profile tab depend on subscriptions. Remove them for the pilot?', 'This affects the Post screen and the profile tabs.', 'Hidden in the pilot.', 'app/#/post', 'p1'],
+      ['"Go Global" auto-translated subtitles: in this contract or a later phase?', 'Auto-translation needs a paid translation service and adds cost to every video.', 'Later phase. The toggle shows "Coming soon" and the profile banner is hidden.', 'app/#/post', 'p1'],
+      ['"Also post to TikTok and Instagram" with a "Watch on Dumo" link: in scope?', 'Posting to other platforms needs their APIs and app reviews, which takes weeks.', 'Later phase. Hidden in the pilot. The share sheet offers WhatsApp and other apps through Android\'s share menu.', 'app/#/feed?sheet=share', 'p1'],
+      ['The share toast mentions a "referral bonus". Is there a referral programme in the pilot?', 'A referral bonus needs tracking and a payout rule.', 'No referral bonus in the pilot. Share copies a link to the video.', 'app/#/feed?sheet=share', 'p2']
+    ]},
+    { id:'feed', title:'Feed & content', items:[
+      ['What is the "Mzansi" tab? For example, trending in South Africa, or local-language content?', 'It is a third feed with its own ranking rule, which the brief does not cover.', 'Kept as a tab showing trending videos from SA creators (most liked in the last 48 h). Can be removed if not needed.', 'app/#/feed', 'p1'],
+      ['For You ranking: are "newest and most liked" equally important? Should comments and views count?', 'This sets the ranking formula we test in M2.', 'Engagement score (likes ×2, comments ×3, views ÷10) with a 24 h half-life.', 'plan.html#rules', 'p2'],
+      ['Is there a minimum video length (e.g. 3 s), as well as the 60 s maximum?', 'Very short clips can be used to farm views.', 'Minimum 3 s, maximum 60 s. The recorder stops automatically at 60 s.', 'app/#/post', 'p2'],
+      ['Which languages can creators tag a video with? All 11 official languages plus SA Sign Language?', 'This sets the language picker and future search filters.', 'English, isiZulu, isiXhosa, Afrikaans, Sesotho, Setswana, Sepedi, Xitsonga, siSwati, Tshivenda, isiNdebele, plus "Other".', 'app/#/post', 'p2'],
+      ['Your design shows "Original sound". Can creators add music in the pilot?', 'Music licensing is a serious copyright risk for user-generated video.', 'No music library. The video keeps its own audio, labelled "Original sound".', 'app/#/feed', 'p1'],
+      ['Can comments be turned off by a creator, or deleted by the creator on their own videos?', 'This matters for safety and creator control.', 'Creators can delete comments on their own videos. Comments cannot be turned off in the pilot.', 'app/#/feed?sheet=comments', 'p3']
+    ]},
+    { id:'auth', title:'Sign-up, login & age', items:[
+      ['Only South African numbers (+27), or other countries too?', 'This affects SMS cost, fraud risk and the phone number input.', 'South Africa (+27) only.', 'app/#/phone', 'p2'],
+      ['Age check: is a self-declared date of birth enough for the pilot, or do you need ID verification?', 'ID checks need a third-party service, which adds cost and time.', 'Self-declared date of birth. Under 13 is blocked. Ages 13–17 can use the app, but earning is locked until 18.', 'app/#/age', 'p1'],
+      ['For users aged 13–17, do you need parental consent (POPIA treats under-18s as children)?', 'This is a legal requirement. It may add a consent step or limit what minors can do.', 'Parent or guardian consent is confirmed with a checkbox. Please confirm with your legal adviser.', 'app/#/age', 'p1'],
+      ['Handle rules: length, allowed characters, and can a handle be changed?', 'This affects sign-up validation and profile links.', '3–24 characters, using a–z, 0–9, "." and "_". Can be changed once every 30 days.', 'app/#/profile-setup', 'p3'],
+      ['Should users stay logged in until they log out, or be logged out after a period?', 'This is a trade-off between security and convenience, and it costs SMS.', 'Users stay logged in until they log out. Each new login sends a new SMS code.', 'app/#/settings', 'p3']
+    ]},
+    { id:'wallet', title:'Wallet (test money)', items:[
+      ['What starting rand value per 1,000 qualified views should we put in the admin setting?', 'All wallet test results are calculated from this number.', 'R3.50 per 1,000 qualified views (a placeholder only).', 'admin/', 'p2'],
+      ['Qualified view: do you agree with "watched at least 3 s, not the creator, and not the same viewer within 30 minutes"?', 'This is the core rule of the M4 spreadsheet check.', 'At least 3 s, 30-minute repeat window.', 'plan.html#rules', 'p2'],
+      ['Confirm the gift catalogue for the pilot: Protea R2, Vuvuzela R10, Gold crown R50?', 'This sets the gift sheet and the 70% calculation (R1.40 / R7.00 / R35.00).', 'Those three gifts, paid in free test coins.', 'app/#/feed?sheet=gift', 'p1'],
+      ['How do test coins reach viewers? For example, every new user gets free test coins, with a top-up button for testing?', 'Viewers need coins to test gifting.', 'Every account starts with 500 test coins (1 coin = R0.10), with a "Get 500 free test coins" button.', 'app/#/coins', 'p1'],
+      ['Should the "Subscribers" earnings tile appear in the pilot even though it will always show R0?', 'The brief asks for earnings broken down by views, gifts and subscribers.', 'Shown with R0.00 and a "Coming soon" label.', 'app/#/wallet', 'p2'],
+      ['What earns the "Founding Creator" badge? All 100 pilot creators, or picked by an admin?', 'This decides whether admins need a control for the badge.', 'All pilot creators get it. Admins can switch it on or off per user.', 'app/#/creator/thandi.moves', 'p3']
+    ]},
+    { id:'safety', title:'Safety & moderation', items:[
+      ['Who moderates reports during the pilot, and how fast should reports be handled?', 'This sets admin roles and the alerting we build.', 'Your team uses the admin dashboard and aims to handle reports within 24 h. A daily email summarises open reports.', 'admin/', 'p2'],
+      ['Report reasons list: is this list right?', 'This sets the report sheet and dashboard filters.', 'Nudity or sexual content · Violence · Hate or harassment · Child safety · Spam or scam · Dangerous acts · Other.', 'app/#/feed?sheet=report', 'p1'],
+      ['Should a video be hidden automatically after a number of reports, before an admin reviews it?', 'This protects users at night and on weekends.', 'Hidden automatically after 3 reports from different users until an admin reviews it. A child-safety report hides it immediately.', 'admin/', 'p2'],
+      ['Who writes the community guidelines, privacy policy and terms of service text?', 'Google Play requires these, and the app shows them at sign-up.', 'You supply the final text. We use a clearly marked placeholder until then.', 'app/#/guidelines', 'p2'],
+      ['Should blocking someone also hide their comments, and stop them viewing your profile?', 'This defines what blocking does in the app.', 'Blocking hides each other\'s videos, comments and profiles both ways.', 'app/#/creator/thandi.moves', 'p3']
+    ]},
+    { id:'brand', title:'Brand & experience', items:[
+      ['App name on Google Play: "Dumo", or "Dumo The Fame"?', 'This is needed for the Play listing and the name under the app icon.', '"Dumo" on the phone. "Dumo – The Fame" on the Play listing.', 'index.html', 'p2'],
+      ['Is a dark-only app OK, or do you also want a light mode?', 'A light mode doubles the visual QA for each screen.', 'Dark only, as in your prototype.', 'app/#/feed', 'p1'],
+      ['English only at launch, with translations later?', 'All text sits in one file, so adding languages later is easy.', 'English only at launch.', 'app/#/settings', 'p3']
+    ]},
+    { id:'ops', title:'Accounts & operations', items:[
+      ['What name should the company GitHub organisation have, and who will be its owner?', 'Code is pushed there from week 1.', 'A new organisation called "dumothefame", owned by BP Mhlanga.', 'plan.html#security', 'p2'],
+      ['Does Dumo The Fame (Pty) Ltd have a Google Play developer account (organisation) and a D-U-N-S number?', 'D-U-N-S verification can take up to 30 days and could delay the pilot release.', 'Not yet. We will guide the set-up in week 1.', 'plan.html#costs', 'p2'],
+      ['Who provides the company card for cloud, video and SMS billing?', 'Accounts must be in the company\'s name and paid by the company.', 'You add a company card. We set budget alerts.', 'plan.html#costs', 'p2'],
+      ['Do you have a preferred SMS provider (e.g. Clickatell), or are you happy with Firebase phone auth?', 'This affects cost and whether codes arrive reliably on SA networks.', 'Firebase phone auth, with Clickatell as a fallback.', 'plan.html#stack', 'p3'],
+      ['Do you own a domain and company email (e.g. dumothefame.com) for share links and the Play listing?', 'Share links like dumo.app/v/123 need a domain.', 'dumothefame.com will be used for share links and support email.', 'app/#/feed?sheet=share', 'p3'],
+      ['Are you comfortable with videos stored by a global video service (US/EU) under a POPIA data agreement, while all other data stays in Johannesburg?', 'This is a data-residency decision for your company.', 'Yes, with a signed data processing agreement.', 'plan.html#stack', 'p2']
+    ]},
+    { id:'pilot', title:'Pilot logistics & commercial', items:[
+      ['How will the 100 pilot creators be invited? By a list of phone numbers or emails, or a public link?', 'Closed testing on Google Play needs testers\' Google account emails.', 'Closed testing with an email list you provide.', 'plan.html#milestones', 'p2'],
+      ['What support channel should pilot users have, e.g. a WhatsApp number or email?', 'We show it in Settings › Help.', 'A WhatsApp support number shown in Settings.', 'app/#/settings', 'p3'],
+      ['Please confirm the total budget and that payment runs through Fiverr milestones as described in the brief.', 'We need this to quote each milestone and agree dates.', 'Six Fiverr milestones split 10/20/15/15/15/25%.', 'plan.html#milestones', 'p3'],
+      ['Is the 12 October 2026 kickoff, with a December holiday break, acceptable?', 'This fixes every milestone date.', 'Yes. The pilot release is targeted for late January 2027.', 'plan.html#timeline', 'p2']
+    ]}
+  ];
+
+  var KEY = 'dumo-answers-v1', mem = {};
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return mem; } }
+  function save(d){ mem = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){} }
+  var data = load();
+  var all = [];
+  var n = 0;
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]; }); };
+  var strip = function(s){ return String(s).replace(/<[^>]+>/g, ''); };
+
+  var html = '';
+  GROUPS.forEach(function(g){
+    html += '<section class="group" id="g-' + g.id + '"><h2>' + g.title + ' <small data-gc="' + g.id + '"></small></h2>';
+    g.items.forEach(function(it){
+      n++; var id = 'Q' + n;
+      all.push({ id:id, group:g.title, q:it[0], why:it[1], assume:it[2], link:it[3], pri:it[4] });
+      html += '<article class="q" id="' + id + '" data-pri="' + it[4] + '" data-g="' + g.id + '">' +
+        '<div class="qhead"><div class="qtext"><span class="qid">' + id + '</span>' + esc(it[0]) + '</div><span class="pri ' + it[4] + '">' + P[it[4]] + '</span></div>' +
+        '<p class="why">Why it matters: ' + esc(it[1]) + '</p>' +
+        '<div class="assume"><b>Our design assumption</b>' + it[2] + ' <a href="' + it[3] + '">See it →</a></div>' +
+        '<div class="choice" role="radiogroup" aria-label="' + id + ' answer">' +
+          '<label><input type="radio" name="' + id + '" value="agree"> Agree with assumption</label>' +
+          '<label><input type="radio" name="' + id + '" value="different"> Different answer</label>' +
+        '</div>' +
+        '<textarea aria-label="' + id + ' answer or note" placeholder="Your answer or a note (optional when you agree)"></textarea>' +
+      '</article>';
+    });
+    html += '</section>';
+  });
+  document.getElementById('groups').innerHTML = html;
+
+  function isAnswered(a){ return a && (a.choice === 'agree' || (a.choice === 'different' && a.note && a.note.trim())); }
+
+  all.forEach(function(q){
+    var el = document.getElementById(q.id), a = data[q.id] || {};
+    var ta = el.querySelector('textarea');
+    if (a.choice){ var r = el.querySelector('input[value="' + a.choice + '"]'); if (r) r.checked = true; }
+    if (a.note) ta.value = a.note;
+    el.addEventListener('change', function(e){ if (e.target.type === 'radio'){ data[q.id] = Object.assign({}, data[q.id], { choice: e.target.value }); save(data); update(); if (e.target.value === 'different') ta.focus(); } });
+    ta.addEventListener('input', function(){ data[q.id] = Object.assign({}, data[q.id], { note: ta.value }); save(data); update(); });
+  });
+
+  var who = document.getElementById('who');
+  who.value = data._name || '';
+  who.addEventListener('input', function(){ data._name = who.value; save(data); });
+
+  var filter = 'all';
+  function update(){
+    var done = 0;
+    all.forEach(function(q){
+      var ok = isAnswered(data[q.id]); if (ok) done++;
+      var el = document.getElementById(q.id);
+      el.classList.toggle('answered', !!ok);
+      el.hidden = !(filter === 'all' || (filter === 'open' ? !ok : q.pri === filter));
+    });
+    GROUPS.forEach(function(g){
+      var vis = document.querySelectorAll('[data-g="' + g.id + '"]:not([hidden])').length;
+      document.getElementById('g-' + g.id).hidden = vis === 0;
+      var qs = all.filter(function(q){ return q.group === g.title; });
+      document.querySelector('[data-gc="' + g.id + '"]').textContent = qs.filter(function(q){ return isAnswered(data[q.id]); }).length + ' / ' + qs.length + ' answered';
+    });
+    document.getElementById('progLabel').textContent = done + ' of ' + all.length + ' answered';
+    document.getElementById('fill').style.width = (done / all.length * 100) + '%';
+    var t = document.getElementById('track'); t.setAttribute('aria-valuemax', all.length); t.setAttribute('aria-valuenow', done);
+  }
+  document.querySelectorAll('.filters button').forEach(function(b){
+    b.addEventListener('click', function(){ filter = b.dataset.f; document.querySelectorAll('.filters button').forEach(function(x){ x.setAttribute('aria-pressed', x === b); }); update(); });
+  });
+  update();
+
+  function asText(){
+    var done = all.filter(function(q){ return isAnswered(data[q.id]); }).length;
+    var out = ['Dumo — client answers to discovery questions', 'From: ' + (data._name || '(name not given)') + ' · ' + new Date().toLocaleString(), done + ' of ' + all.length + ' answered', ''];
+    var last = '';
+    all.forEach(function(q){
+      if (q.group !== last){ out.push('== ' + q.group + ' =='); last = q.group; }
+      var a = data[q.id] || {};
+      var ans = a.choice === 'agree' ? 'AGREE with assumption' : a.choice === 'different' ? 'DIFFERENT' : 'not answered';
+      out.push(q.id + ' [' + P[q.pri] + '] ' + q.q);
+      out.push('   Assumption: ' + strip(q.assume));
+      out.push('   Answer: ' + ans + (a.note && a.note.trim() ? ' — ' + a.note.trim().replace(/\n/g, ' / ') : ''));
+      out.push('');
+    });
+    return out.join('\n');
+  }
+  function shortText(){
+    // For email: answered questions only, compact, without assumptions
+    var out = ['Dumo — discovery answers from ' + (data._name || 'client'), ''];
+    all.forEach(function(q){
+      var a = data[q.id] || {}; if (!a.choice && !(a.note && a.note.trim())) return;
+      out.push(q.id + ': ' + (a.choice === 'agree' ? 'Agree' : a.choice === 'different' ? 'Different' : 'Note') + (a.note && a.note.trim() ? ' — ' + a.note.trim().replace(/\n/g, ' / ') : ''));
+    });
+    return out.join('\n');
+  }
+  function toast(m){ var t = document.getElementById('toast'); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function(){ t.hidden = true; }, 2400); }
+  function dl(name, text, type){
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: type })); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); toast('Downloaded ' + name);
+  }
+  var stamp = function(){ return new Date().toISOString().slice(0,10); };
+  var actions = {
+    send: function(){
+      var body = shortText();
+      var note = document.getElementById('sendNote');
+      if (body.length > 1800){ body = body.slice(0, 1800) + '\n\n[…truncated — full answers in the attached file]'; note.textContent = 'Your answers are long, so the email is shortened. Please also download the answers file and attach it.'; }
+      location.href = 'mailto:?subject=' + encodeURIComponent('Dumo discovery answers' + (data._name ? ' — ' + data._name : '')) + '&body=' + encodeURIComponent(body);
+    },
+    json: function(){ var out = { project:'Dumo', type:'discovery-answers', exported:new Date().toISOString(), by:data._name || '', answers: all.map(function(q){ var a = data[q.id] || {}; return { id:q.id, priority:P[q.pri], question:q.q, assumption:strip(q.assume), choice:a.choice || null, note:a.note || '' }; }) }; dl('dumo-answers-' + stamp() + '.json', JSON.stringify(out, null, 2), 'application/json'); },
+    txt: function(){ dl('dumo-answers-' + stamp() + '.txt', asText(), 'text/plain'); },
+    copy: function(){ var t = asText(); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function(){ toast('Answers copied'); }, function(){ toast('Copy is blocked here. Use Download instead.'); }); },
+    print: function(){ window.print(); }
+  };
+  document.addEventListener('click', function(e){ var b = e.target.closest('[data-a]'); if (b && actions[b.dataset.a]) actions[b.dataset.a](); });
+})();
+</script>
+</body>
+</html>

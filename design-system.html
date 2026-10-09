@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dumo Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="icon" href="assets/dumo-icon.png">
+<link rel="stylesheet" href="assets/brand.css">
+<script src="assets/review.js" defer></script>
+<style>
+  main.page{overflow-x:clip}
+  .hero{display:flex;flex-direction:column;gap:12px}
+  .hero h1{font-size:clamp(34px,6vw,56px);font-weight:800}
+  section{margin-top:56px;scroll-margin-top:80px}
+  section > h2{font-size:clamp(24px,3.4vw,32px);font-weight:800;margin-bottom:6px}
+  section > .sub{color:var(--muted);margin:0 0 18px;max-width:72ch}
+  h3{font-size:17px;font-weight:700;margin:0 0 8px}
+  .toc{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:6px 0 0;padding:0}
+  .toc a{display:inline-block;font-size:13px;font-weight:600;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+  .card p,.card li{font-size:15px;color:var(--muted)}
+  .card ul{margin:0;padding-left:18px}
+  .card p{margin:0}
+
+  /* brand */
+  .logo-tile{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  .logo-tile img{display:block;width:100%}
+  .logo-tile figcaption{padding:10px 14px;font-size:13px;color:var(--muted);background:var(--surface)}
+  .icon-row{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+  .icon-row figure{margin:0;display:flex;flex-direction:column;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+  .icon-row img{border-radius:22%;display:block;box-shadow:var(--shadow)}
+
+  /* colours */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px}
+  .sw{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .sw .c{height:84px;display:flex;align-items:flex-end;padding:8px 10px;font:700 13px var(--body)}
+  .sw .i{padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+  .sw b{font-size:14px}
+  .sw code{font-size:13px;color:var(--accent)}
+  .sw span{font-size:12.5px;color:var(--muted);line-height:1.4}
+
+  /* type */
+  .type-row{display:grid;grid-template-columns:minmax(120px,170px) 1fr;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+  .type-row:last-child{border-bottom:none}
+  .type-row .spec{font-size:12.5px;color:var(--muted);line-height:1.4}
+  .type-row .spec b{display:block;color:var(--fg);font-size:13px}
+  .sample{overflow-wrap:anywhere;line-height:1.2}
+  @media (max-width:520px){.type-row{grid-template-columns:1fr;gap:4px}}
+
+  /* tokens */
+  .scale{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+  .scale div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+  .scale i{display:block;background:var(--accent-bg);border-radius:3px}
+  .radii{display:flex;flex-wrap:wrap;gap:14px}
+  .radii div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--muted);text-align:center}
+  .radii i{display:block;width:72px;height:56px;background:var(--surface-2);border:2px solid var(--accent)}
+
+  /* phone surface — app dark tokens */
+  .surface{
+    --a-stage:#0B0906;--a-bg:#17120C;--a-panel:#241B12;--a-line:#3A2E20;--a-fg:#FBF6EC;--a-muted:#C9B99F;--a-accent:#F2A93B;--a-teal:#7FE0CF;--a-ink:#17120C;
+    background:var(--a-bg);color:var(--a-fg);border-radius:24px;border:1px solid var(--a-line);padding:20px;display:grid;gap:22px;font-family:var(--body)
+  }
+  .surface .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a-muted);margin-bottom:8px}
+  .surface .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .a-btn{height:48px;border-radius:12px;border:none;font:700 15px var(--body);display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 20px;cursor:pointer}
+  .a-btn.acc{background:var(--a-accent);color:var(--a-ink)}
+  .a-btn.dark{background:var(--a-ink);color:#fff;border:1px solid var(--a-line)}
+  .a-btn.ghost{background:var(--a-panel);color:var(--a-fg)}
+  .a-btn.light{background:#fff;color:var(--a-ink)}
+  .a-btn:disabled{opacity:.5;cursor:not-allowed}
+  .a-pill{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.4);font-size:13px;color:var(--a-fg)}
+  .a-badge{font-size:11px;font-weight:700;color:var(--a-ink);background:var(--a-accent);border-radius:6px;padding:2px 6px}
+  .a-chip{font-size:11px;font-weight:600;color:var(--a-fg);border:1px solid var(--a-line);border-radius:6px;padding:2px 6px}
+  .a-tabs{display:flex;gap:22px}
+  .a-tabs span{padding:6px 0;color:rgba(255,255,255,.7);font-size:15px}
+  .a-tabs span.on{color:#fff;font-weight:700;border-bottom:2px solid var(--a-accent)}
+  .a-field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--a-muted);flex:1;min-width:min(100%,220px)}
+  .a-field input,.a-field select{height:46px;background:var(--a-panel);border:1px solid #4A3D2C;border-radius:12px;color:var(--a-fg);padding:0 12px;font:400 15px var(--body);width:100%}
+  .a-toggles{background:var(--a-panel);border-radius:16px;padding:2px 14px;max-width:420px}
+  .a-toggles label{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:58px;border-bottom:1px solid var(--a-line)}
+  .a-toggles label:last-child{border-bottom:none}
+  .a-toggles strong{font-size:15px;display:block}
+  .a-toggles small{display:block;font-size:12px;color:var(--a-muted)}
+  .a-toggles input{width:22px;height:22px;accent-color:var(--a-accent);flex:none}
+  .a-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:420px}
+  .a-tile{background:var(--a-panel);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:3px}
+  .a-tile span{font-size:12px;color:var(--a-muted)}
+  .a-tile b{font-size:17px;font-variant-numeric:tabular-nums}
+  .a-tile small{font-size:11px;color:var(--a-muted)}
+  .a-card{background:var(--a-accent);color:var(--a-ink);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:6px;max-width:420px}
+  .a-card .big{font-family:var(--display);font-weight:800;font-size:40px;letter-spacing:-1px;font-variant-numeric:tabular-nums;line-height:1.1}
+  .a-test{align-self:flex-start;font-size:11px;font-weight:800;background:var(--a-ink);color:var(--a-accent);border-radius:6px;padding:2px 8px;letter-spacing:.04em}
+  .a-list{list-style:none;margin:0;padding:0;max-width:420px}
+  .a-list li{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--a-line);font-size:14px}
+  .a-list li:last-child{border-bottom:none}
+  .a-plus{color:var(--a-teal);font-weight:700;font-variant-numeric:tabular-nums}
+  .a-sheetwrap{position:relative;height:250px;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,#3A2A1A,#17120C);max-width:420px}
+  .a-scrim{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+  .a-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--a-bg);border-top:1px solid var(--a-line);border-radius:22px 22px 0 0;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .a-grab{width:40px;height:4px;border-radius:2px;background:var(--a-line);align-self:center}
+  .a-gifts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .a-gift{background:var(--a-panel);border:2px solid transparent;border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px}
+  .a-gift.sel{border-color:var(--a-accent)}
+  .a-gift b{color:var(--a-accent)}
+  .a-toast{background:var(--a-fg);color:var(--a-ink);border-radius:12px;padding:12px 14px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:420px}
+  .a-tabbar{display:flex;justify-content:space-around;align-items:flex-start;background:#0E0B07;padding:10px 0 14px;border-radius:16px;max-width:420px}
+  .a-tabbar span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:rgba(255,255,255,.6);min-width:52px}
+  .a-tabbar span.on{color:#fff}
+  .a-tabbar .post{width:56px;height:40px;border-radius:12px;background:var(--a-accent);justify-content:center}
+  .a-av{width:48px;height:48px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:700;background:#2BB3A3}
+  .a-av.lg{width:88px;height:88px;border:3px solid var(--a-accent);font-family:var(--display);font-weight:800;font-size:30px}
+  .a-rail{display:flex;flex-direction:column;align-items:center;gap:14px;background:linear-gradient(160deg,#3A2A1A,#241B12);border-radius:16px;padding:14px 12px}
+  .a-rail div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:600}
+  .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px;align-items:start}
+
+  .do-dont{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+  .do-dont div{border-radius:14px;padding:14px;border:1px solid var(--line);background:var(--surface);font-size:15px}
+  .do-dont b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+  .do b{color:var(--ok)} .dont b{color:var(--warn)}
+  code.k{font-size:13px;background:var(--surface-2);border-radius:6px;padding:1px 6px}
+  pre{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;font-size:13px;line-height:1.5;margin:0}
+</style>
+</head>
+<body>
+<header class="site-head"><div class="in"><a class="brand" href="./"><img src="assets/dumo-icon.png" alt="">dumo <span class="chip">Design review</span></a><nav><a href="./">Hub</a><a href="plan.html">Plan</a><a href="questions.html">Questions</a><a href="board.html">Screens</a><a href="app/">App prototype</a><a href="admin/">Admin</a><a href="design-system.html" aria-current="page">Design system</a></nav></div></header>
+
+<main class="page">
+  <div class="hero" id="top">
+    <span class="eyebrow">Design system · v1.0</span>
+    <h1>Dumo design system</h1>
+    <p class="lede">The design foundations and components behind every app screen, taken from the client's prototype and screen designs. The app uses a single warm dark theme because it is a video app. Developers map these tokens straight into Flutter's <code class="k">ThemeData</code>.</p>
+    <ul class="toc" aria-label="On this page">
+      <li><a href="#brand">Brand</a></li><li><a href="#color">Colour</a></li><li><a href="#type">Type</a></li><li><a href="#space">Spacing &amp; radii</a></li><li><a href="#icons">Icons</a></li><li><a href="#components">Components</a></li><li><a href="#a11y">Accessibility</a></li><li><a href="#motion">Motion</a></li><li><a href="#saver">Data Saver</a></li><li><a href="#voice">Voice</a></li><li><a href="#flutter">Flutter handoff</a></li>
+    </ul>
+  </div>
+
+  <section id="brand">
+    <h2>Brand</h2>
+    <p class="sub">The "d" mark holds a teal play button with an amber spark: a creator's moment of fame. The wordmark is set in Bricolage Grotesque ExtraBold, with "THE FAME" in widely letter-spaced capitals.</p>
+    <div class="grid2">
+      <figure class="logo-tile" style="margin:0"><img src="assets/dumo-logo-dark.png" alt="Dumo The Fame logo on a dark background"><figcaption>Primary: use on dark and video surfaces (app, splash, Play feature graphic)</figcaption></figure>
+      <figure class="logo-tile" style="margin:0"><img src="assets/dumo-logo-light.png" alt="Dumo The Fame logo on a light background"><figcaption>Light: use on documents, the website and print. "THE FAME" turns deep amber (#A86A10) for contrast.</figcaption></figure>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card">
+        <h3>App icon</h3>
+        <div class="icon-row">
+          <figure><img src="assets/dumo-icon.png" alt="Dumo app icon" width="96" height="96">96 dp</figure>
+          <figure><img src="assets/dumo-icon.png" alt="" width="48" height="48">48 dp</figure>
+          <figure><img src="assets/dumo-icon.png" alt="" width="32" height="32">32 dp</figure>
+        </div>
+        <p style="margin-top:12px">Android adaptive icon: the "d" mark sits on a #17120C background layer. Keep the mark inside the central 66% safe zone so launcher masks don't crop the spark.</p>
+      </div>
+      <div class="card">
+        <h3>Usage rules</h3>
+        <ul>
+          <li>Clear space around the logo is at least the height of the "d" bowl's inner circle.</li>
+          <li>Minimum size: the icon at 24 px, the wordmark lock-up 120 px wide.</li>
+          <li>In the app, the wordmark is plain lowercase "dumo" text in amber (#F2A93B) at 26 px in the feed header.</li>
+          <li>Don't recolour, stretch, outline or place the logo on busy video frames without a scrim.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="color">
+    <h2>Colour</h2>
+    <p class="sub">Warm near-blacks instead of pure black, so the app feels like a lounge rather than a void. Amber is the only call-to-action colour. Teal stands for money coming in and for Data Saver being active.</p>
+    <div class="swatches" id="swatches"></div>
+    <div class="card" style="margin-top:14px">
+      <h3>Contrast notes</h3>
+      <ul>
+        <li><b>fg #FBF6EC</b> on <b>bg #17120C</b>: about 17:1 (AAA). <b>muted #C9B99F</b> on bg: about 9.7:1 (AAA). Muted is safe for small helper text.</li>
+        <li><b>ink #17120C</b> on <b>amber #F2A93B</b>: about 9.3:1. Text on amber buttons is always ink, never white (white on amber is about 2:1 and fails).</li>
+        <li><b>teal #7FE0CF</b> on bg: about 12:1. Use it for positive amounts (+R356.20) and active Data Saver.</li>
+        <li><b>coral #E4572E</b> is used only for the filled "liked" heart and destructive actions. As text on bg it is about 5.1:1, which passes AA for body text.</li>
+        <li>Text over video always sits on a 35–45% black scrim at the top and bottom of the screen.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="type">
+    <h2>Typography</h2>
+    <p class="sub">Two families from Google Fonts, both under the OFL licence and free for commercial use. Bricolage Grotesque gives Dumo its loud, confident voice. DM Sans keeps the interface calm and readable on small screens.</p>
+    <div class="card">
+      <div class="type-row"><div class="spec"><b>Display XL</b>Bricolage 800 · 40/44 · −1px</div><div class="sample" style="font:800 40px/1.1 var(--display);letter-spacing:-1px">R1,284.50</div></div>
+      <div class="type-row"><div class="spec"><b>Display L</b>Bricolage 800 · 28/34</div><div class="sample" style="font:800 28px/1.2 var(--display)">Wallet</div></div>
+      <div class="type-row"><div class="spec"><b>Display M</b>Bricolage 800 · 24/30</div><div class="sample" style="font:800 24px/1.25 var(--display)">Thandi Mokoena</div></div>
+      <div class="type-row"><div class="spec"><b>Title</b>DM Sans 700 · 16/22</div><div class="sample" style="font:700 16px/1.4 var(--body)">Earnings by week</div></div>
+      <div class="type-row"><div class="spec"><b>Button / Tab</b>DM Sans 700 · 15/20</div><div class="sample" style="font:700 15px/1.35 var(--body)">Post to Dumo</div></div>
+      <div class="type-row"><div class="spec"><b>Body</b>DM Sans 400 · 14/20</div><div class="sample" style="font:400 14px/1.45 var(--body)">Teaching my gogo the new amapiano step. She killed it! #Mzansi #DumoChallenge</div></div>
+      <div class="type-row"><div class="spec"><b>Caption</b>DM Sans 500 · 12/16</div><div class="sample" style="font:500 12px/1.4 var(--body);color:var(--muted)">212K views · To Capitec · 082 *** 4417</div></div>
+      <div class="type-row"><div class="spec"><b>Micro / Badge</b>DM Sans 700 · 11/14</div><div class="sample" style="font:700 11px/1.3 var(--body)">Founding Creator · Home · Discover</div></div>
+    </div>
+    <p class="note" style="font-size:13px;color:var(--muted);margin-top:10px">Numbers in money and stats use tabular figures (<code class="k">font-feature-settings: 'tnum'</code>) so columns line up. Respect Android font scaling up to 130% without truncating buttons.</p>
+  </section>
+
+  <section id="space">
+    <h2>Spacing, radii &amp; elevation</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Spacing: 4-pt grid</h3>
+        <div class="scale">
+          <div><i style="width:4px;height:4px"></i>4</div><div><i style="width:8px;height:8px"></i>8</div><div><i style="width:12px;height:12px"></i>12</div><div><i style="width:16px;height:16px"></i>16</div><div><i style="width:20px;height:20px"></i>20</div><div><i style="width:24px;height:24px"></i>24</div><div><i style="width:32px;height:32px"></i>32</div>
+        </div>
+        <p style="margin-top:12px">Screen gutter 16. Section gap 18–24. Gap between items in a list 10–12. The bottom tab bar adds the Android gesture-bar inset.</p>
+      </div>
+      <div class="card">
+        <h3>Corner radius</h3>
+        <div class="radii">
+          <div><i style="border-radius:6px"></i>6<br>badge, chip</div>
+          <div><i style="border-radius:12px"></i>12<br>button, input</div>
+          <div><i style="border-radius:14px"></i>14<br>tile, gift</div>
+          <div><i style="border-radius:20px"></i>20<br>card</div>
+          <div><i style="border-radius:22px 22px 0 0"></i>22<br>sheet top</div>
+          <div><i style="border-radius:999px"></i>999<br>pill, avatar</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Elevation</h3>
+      <p>Dark UIs show depth through surface colour, not shadow: <b>bg #17120C</b> (base) → <b>panel #241B12</b> (raised tiles, inputs) → <b>sheet</b> (bg plus a 1px #3A2E20 top border over a 55% black scrim). Only toasts get a drop shadow (0 8 24 / 40% black), because they float over video.</p>
+    </div>
+  </section>
+
+  <section id="icons">
+    <h2>Iconography</h2>
+    <p class="sub">Line icons on a 24px grid with a 2px stroke and round caps and joins, matching the prototype. Filled versions are used only for state (a liked heart). Use Lucide (ISC licence) as the source set in Flutter via <code class="k">lucide_icons</code>, or export SVGs.</p>
+    <div class="card"><div class="row" style="display:flex;flex-wrap:wrap;gap:22px;color:var(--fg)" id="iconRow"></div></div>
+  </section>
+
+  <section id="components">
+    <h2>Components</h2>
+    <p class="sub">These are rendered live with the app's dark tokens. The <a href="app/">App prototype</a> uses exactly these parts.</p>
+    <div class="surface" id="kit">
+      <div>
+        <div class="lbl">Buttons: height 48, radius 12</div>
+        <div class="row">
+          <button class="a-btn acc" type="button">Post to Dumo</button>
+          <button class="a-btn dark" type="button">Cash out</button>
+          <button class="a-btn ghost" type="button">Cancel</button>
+          <button class="a-btn light" type="button">Follow</button>
+          <button class="a-btn acc" type="button" disabled>Coming soon</button>
+        </div>
+      </div>
+      <div class="split">
+        <div>
+          <div class="lbl">Pill · badge · chip</div>
+          <div class="row">
+            <span class="a-pill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7FE0CF" stroke-width="2" stroke-linecap="round"><path d="M12 2v8"/><path d="M5 9l7 7 7-7"/><path d="M4 20h16"/></svg>Data saver</span>
+            <span class="a-badge">Founding Creator</span>
+            <span class="a-chip">isiZulu · English</span>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Feed tabs</div>
+          <div class="a-tabs"><span>Following</span><span class="on">For You</span><span>Mzansi</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="lbl">Inputs: height 46, panel fill</div>
+        <div class="row">
+          <label class="a-field">Cellphone number<input value="+27 82 555 0142" aria-label="Cellphone number example"></label>
+          <label class="a-field">Video language<select aria-label="Video language example"><option>isiZulu</option><option>English</option></select></label>
+        </div>
+      </div>
+      <div class="split">
+        <div>
+          <div class="lbl">Toggle rows</div>
+          <div class="a-toggles">
+            <label><span><strong>Earn from this video</strong><small>Views and gifts pay into your wallet</small></span><input type="checkbox" checked></label>
+            <label><span><strong>Upload on Wi-Fi only</strong><small>Saves your mobile data</small></span><input type="checkbox"></label>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Balance card (test money)</div>
+          <div class="a-card">
+            <span class="a-test">TEST MONEY</span>
+            <span style="font-size:13px;font-weight:500">Pilot earnings</span>
+            <span class="big">R1,284.50</span>
+            <span style="font-size:13px">Cash out arrives in a later phase</span>
+          </div>
+        </div>
+      </div>
+      <div class="split">
+        <div>
+          <div class="lbl">Stat tiles</div>
+          <div class="a-tiles">
+            <div class="a-tile"><span>Views</span><b>R742.10</b><small>212K views</small></div>
+            <div class="a-tile"><span>Gifts</span><b>R398.40</b><small>86 fans</small></div>
+            <div class="a-tile"><span>Subs</span><b>R0.00</b><small>Soon</small></div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">List rows</div>
+          <ul class="a-list">
+            <li><span>Vuvuzela from @kasi.kitchen</span><span class="a-plus">+R7.00</span></li>
+            <li><span>Views · week 4</span><span class="a-plus">+R212.40</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="split">
+        <div>
+          <div class="lbl">Bottom sheet</div>
+          <div class="a-sheetwrap">
+            <div class="a-scrim"></div>
+            <div class="a-sheet">
+              <span class="a-grab"></span>
+              <b style="font-size:16px">Send a gift to @thandi.moves</b>
+              <div class="a-gifts"><div class="a-gift"><span>Protea</span><b>20 coins</b></div><div class="a-gift sel"><span>Vuvuzela</span><b>100 coins</b></div><div class="a-gift"><span>Gold crown</span><b>500 coins</b></div></div>
+              <button class="a-btn acc" type="button" style="width:100%">Send Vuvuzela</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px">
+          <div>
+            <div class="lbl">Toast</div>
+            <div class="a-toast">Vuvuzela sent. @thandi.moves just earned R7.00 (test money).</div>
+          </div>
+          <div>
+            <div class="lbl">Avatars</div>
+            <div class="row"><span class="a-av">TM</span><span class="a-av" style="background:#E4572E">KK</span><span class="a-av lg">TM</span></div>
+          </div>
+          <div>
+            <div class="lbl">Video action rail</div>
+            <div class="a-rail" style="max-width:96px" id="rail"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="lbl">Bottom tab bar: Home · Discover · Post · Wallet · Profile</div>
+        <div class="a-tabbar" id="tabbar"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="a11y">
+    <h2>Accessibility</h2>
+    <div class="grid3">
+      <div class="card"><h3>Touch</h3><p>Every tap target is at least 44 × 44 dp (48 dp is the Android default). The rail icons are 30–32 dp with padding added to reach 48.</p></div>
+      <div class="card"><h3>Contrast</h3><p>Text is at least 4.5:1 (3:1 for 18 px bold and above). Text over video always sits on a scrim. State is never shown by colour alone: a liked heart is filled as well as coloured.</p></div>
+      <div class="card"><h3>Screen readers</h3><p>Every icon button has a TalkBack label ("Like, 48.2 thousand", "Send a gift"). Feed videos announce the creator and caption. Sheets move focus into the sheet and return it when closed.</p></div>
+      <div class="card"><h3>Captions</h3><p>Captions are always visible text. Auto-subtitles ("Go Global") are a later phase. Creators are encouraged to put key words in the caption.</p></div>
+      <div class="card"><h3>Reduced motion</h3><p>When Android's "Remove animations" setting is on, sheets and toasts appear without sliding, and the feed snaps to the next video instead of animating.</p></div>
+      <div class="card"><h3>Text size</h3><p>Layouts hold up at 130% font scale. Buttons wrap to two lines rather than cutting off text.</p></div>
+    </div>
+  </section>
+
+  <section id="motion">
+    <h2>Motion</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Interaction</th><th>Duration</th><th>Curve</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Feed swipe to next video</td><td>350 ms</td><td>ease (Curves.easeOutCubic)</td><td>Snap paging. The next video is already buffered.</td></tr>
+          <tr><td>Bottom sheet in</td><td>250 ms</td><td>ease-out</td><td>Slides up 40 px and fades in from 60%. The scrim fades over 200 ms.</td></tr>
+          <tr><td>Like</td><td>300 ms</td><td>spring (scale 1 → 1.25 → 1)</td><td>Light haptic tap. A double-tap on the video also likes it.</td></tr>
+          <tr><td>Toast</td><td>200 ms in / 3.2 s hold</td><td>ease-out</td><td>Sits above the tab bar. Only one at a time.</td></tr>
+          <tr><td>Tab switch</td><td>0 ms</td><td>–</td><td>Instant. No animation between main tabs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="saver">
+    <h2>Data Saver patterns</h2>
+    <p class="sub">South African mobile data is expensive. Data Saver is a promise to the user, so it must be visible, honest and simple to control.</p>
+    <div class="grid3">
+      <div class="card"><h3>Always visible</h3><p>The pill in the feed header shows the state. When it is on, the icon is teal. One tap toggles it, and the setting is also in Settings.</p></div>
+      <div class="card"><h3>Honest estimate</h3><p>Show an estimate of data use under the pill: "about 4 MB per min" (saver on) or "about 12 MB per min" (off). Label it as an estimate.</p></div>
+      <div class="card"><h3>What it changes</h3><p>Plays the low-bitrate rendition (about 360p), preloads 1 video instead of 2, loads smaller thumbnails, and defaults uploads to Wi-Fi only.</p></div>
+    </div>
+    <div class="do-dont" style="margin-top:14px">
+      <div class="do"><b>Do</b>Turn Data Saver on by default for new users on cellular.</div>
+      <div class="dont"><b>Don't</b>Hide quality loss. If the video is low-res, the pill must say so.</div>
+    </div>
+  </section>
+
+  <section id="voice">
+    <h2>Voice &amp; content</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>How Dumo talks</h3>
+        <ul>
+          <li>Plain, warm, proudly South African, never corporate. Short sentences.</li>
+          <li>Speak to creators as partners: "You earned R7.00", not "Revenue credited".</li>
+          <li>Local words where they come naturally (Mzansi, kasi, gogo). Never as a gimmick.</li>
+          <li>Errors say what happened and what to do next: "That code didn't work. Check the SMS and try again."</li>
+          <li>Test money is always labelled. Never imply that real money moved.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Formats</h3>
+        <ul>
+          <li>Rand: <b>R1,284.50</b>. R prefix, no space, comma for thousands, always 2 decimals in the wallet.</li>
+          <li>Counts: 48.2K, 1.9M (one decimal, uppercase K/M). Exact numbers under 1,000.</li>
+          <li>Dates: "Fri 2 Oct". Times: 24-hour, "14:30".</li>
+          <li>Phone: +27 82 555 0142, masked as 082 *** 0142.</li>
+          <li>Languages: use each language's own name: isiZulu, isiXhosa, Afrikaans, Sesotho, Setswana…</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="flutter">
+    <h2>Flutter handoff</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Tokens → ThemeData</h3>
+        <ul>
+          <li><code class="k">DumoColors</code> ThemeExtension holds every colour token. <code class="k">ColorScheme.dark(primary: amber, onPrimary: ink, surface: bg, …)</code></li>
+          <li><code class="k">TextTheme</code>: displayLarge/Medium/Small = Bricolage 800. titleMedium/labelLarge/bodyMedium/bodySmall = DM Sans. Fonts are bundled in the app, not loaded at runtime.</li>
+          <li><code class="k">DumoSpacing</code> and <code class="k">DumoRadii</code> constants mirror the scales above.</li>
+          <li>Component widgets: DumoButton, DumoPill, DumoBadge, DumoSheet, DumoToast, DumoTile, StatRow, ActionRail.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Strings in one file</h3>
+        <p>All text lives in <code class="k">lib/l10n/app_en.arb</code> (the brief requires all app text in one file). There are no string literals in widgets, and a lint check enforces this.</p>
+<pre>{
+  "walletTitle": "Wallet",
+  "walletTestBadge": "TEST MONEY",
+  "giftSent": "{gift} sent. {handle} just earned {amount}.",
+  "@giftSent": { "placeholders": { "gift": {}, "handle": {}, "amount": {} } }
+}</pre>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var sw = [
+    ['Stage', '#0B0906', 'Outer background, splash', '#FBF6EC'],
+    ['Background', '#17120C', 'App base surface', '#FBF6EC'],
+    ['Panel', '#241B12', 'Tiles, inputs, raised rows', '#FBF6EC'],
+    ['Line', '#3A2E20', 'Dividers, borders', '#FBF6EC'],
+    ['Foreground', '#FBF6EC', 'Primary text and icons', '#17120C'],
+    ['Muted', '#C9B99F', 'Secondary text, helper copy', '#17120C'],
+    ['Amber (accent)', '#F2A93B', 'Primary CTA, brand, active tab underline', '#17120C'],
+    ['Ink', '#17120C', 'Text on amber, dark buttons', '#FBF6EC'],
+    ['Teal light', '#7FE0CF', 'Money in (+R), Data Saver on', '#17120C'],
+    ['Teal', '#2BB3A3', 'Brand play triangle, avatars, Go Global', '#17120C'],
+    ['Coral', '#E4572E', 'Liked heart, destructive actions', '#17120C'],
+    ['Tab bar', '#0E0B07', 'Bottom navigation background', '#FBF6EC']
+  ];
+  document.getElementById('swatches').innerHTML = sw.map(function(s){
+    return '<div class="sw"><div class="c" style="background:' + s[1] + ';color:' + s[3] + (s[1] === '#17120C' || s[1] === '#0B0906' || s[1] === '#0E0B07' ? ';box-shadow:inset 0 0 0 1px #3A2E20' : '') + '">Aa</div><div class="i"><b>' + s[0] + '</b><code>' + s[1] + '</code><span>' + s[2] + '</span></div></div>';
+  }).join('');
+
+  var I = {
+    Home:'<path d="M3 11l9-8 9 8v10H3z"/>',
+    Discover:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+    Post:'<path d="M12 5v14M5 12h14"/>',
+    Wallet:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M16 13h2M3 10h18"/>',
+    Profile:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/>',
+    Like:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
+    Comment:'<path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/>',
+    Gift:'<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8c-2-4-6-4-6-1s6 1 6 1c0 0 6 2 6-1s-4-3-6 1z"/>',
+    Share:'<path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/>',
+    'Data saver':'<path d="M12 2v8"/><path d="M5 9l7 7 7-7"/><path d="M4 20h16"/>',
+    'Cash out':'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+    Report:'<path d="M4 21V4h12l-1.5 4L16 12H4"/>'
+  };
+  function svg(k, size, stroke){ return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="' + (stroke || 'currentColor') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[k] + '</svg>'; }
+  document.getElementById('iconRow').innerHTML = Object.keys(I).map(function(k){
+    return '<div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--muted);min-width:64px">' + '<span style="color:var(--fg)">' + svg(k, 24) + '</span>' + k + '</div>';
+  }).join('');
+  document.getElementById('rail').innerHTML =
+    '<span class="a-av">TM</span>' +
+    '<div>' + svg('Like', 30) + '48.2K</div>' +
+    '<div>' + svg('Comment', 28) + '1,203</div>' +
+    '<div style="color:#F2A93B">' + svg('Gift', 28, '#F2A93B') + 'Gift</div>' +
+    '<div>' + svg('Share', 28) + 'Share</div>';
+  var tabs = ['Home','Discover','Post','Wallet','Profile'];
+  document.getElementById('tabbar').innerHTML = tabs.map(function(t, i){
+    if (t === 'Post') return '<span class="post">' + svg('Post', 22, '#17120C') + '</span>';
+    return '<span' + (i === 0 ? ' class="on"' : '') + '>' + svg(t, 24) + t + '</span>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

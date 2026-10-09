@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dumo Delivery Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="icon" href="assets/dumo-icon.png">
+<link rel="stylesheet" href="assets/brand.css">
+<script src="assets/review.js" defer></script>
+<style>
+  .hero{display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+  .hero h1{font-size:clamp(34px,6vw,56px);font-weight:800}
+  section{margin-top:56px;scroll-margin-top:80px}
+  section > h2{font-size:clamp(24px,3.4vw,32px);font-weight:800;margin-bottom:6px}
+  section > .sub{color:var(--muted);margin:0 0 20px;max-width:72ch}
+  h3{font-size:18px;font-weight:700;margin:0 0 6px}
+  .toc{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;padding:0;list-style:none}
+  .toc a{display:inline-block;font-size:13px;font-weight:600;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+  .toc a:hover{border-color:var(--accent)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .kpi b{display:block;font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:14px;color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  .card ul{margin:6px 0 0;padding-left:18px;font-size:15px}
+  .card li{margin:3px 0}
+
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:10px;counter-reset:st}
+  .stage{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:6px}
+  .stage .n{font-family:var(--display);font-weight:800;font-size:13px;color:var(--on-accent);background:var(--accent-bg);border-radius:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+  .stage h3{margin:2px 0 0}
+  .stage p{margin:0;font-size:14px;color:var(--muted)}
+  .stage .own{font-size:12px;font-weight:700;color:var(--fg);margin-top:auto;padding-top:6px}
+  .gate{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ok);background:color-mix(in srgb,var(--teal) 14%,transparent);border:1px dashed color-mix(in srgb,var(--teal) 60%,transparent);border-radius:12px;padding:10px 12px}
+  .gates{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px;margin-top:10px}
+
+  .raci td:not(:first-child),.raci th:not(:first-child){text-align:center;font-weight:700}
+  .raci td.R{color:var(--accent)} .raci td.A{color:var(--ok)}
+  .legend{font-size:13px;color:var(--muted);margin-top:8px}
+
+  .stack td:first-child{font-weight:700;white-space:nowrap}
+  .rec{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);margin-right:4px}
+
+  .diagram{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;overflow-x:auto}
+  .diagram svg{display:block;width:100%;min-width:640px;height:auto;color:var(--fg)}
+  .diagram .box{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
+  .diagram .box.acc{fill:color-mix(in srgb,var(--amber) 22%,var(--surface));stroke:var(--amber)}
+  .diagram .box.teal{fill:color-mix(in srgb,var(--teal) 18%,var(--surface));stroke:var(--teal)}
+  .diagram text{fill:currentColor;font-family:var(--body);font-size:13px}
+  .diagram text.t{font-weight:700;font-size:14px}
+  .diagram text.s{fill:var(--muted);font-size:11.5px}
+  .diagram .ln{stroke:var(--muted);stroke-width:1.6;fill:none}
+  .diagram .ln.d{stroke-dasharray:5 4}
+  .diagram .zone{fill:none;stroke:var(--amber);stroke-dasharray:6 5;stroke-width:1.3}
+  .diagram .zl{fill:var(--accent);font-weight:700;font-size:12px}
+  .scroll-hint{font-size:12px;color:var(--muted);margin-top:6px}
+
+  .model{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+  .tbl{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+  .tbl b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:var(--accent)}
+  .tbl code{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.55;white-space:normal;word-break:break-word}
+
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+  .rule{border-left:4px solid var(--amber);background:var(--surface);border-radius:0 12px 12px 0;padding:12px 14px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .rule b{display:block;margin-bottom:2px}
+  .rule p{margin:0;font-size:14px;color:var(--muted)}
+  .rule .chip{margin-top:8px}
+
+  .ms td{font-size:14px}
+  .ms td:first-child{font-family:var(--display);font-weight:800;font-size:18px}
+  .ms ul{margin:0;padding-left:16px}
+  .ms li{margin:2px 0}
+  .ms .done li::marker{content:"☐  "}
+  .ms a{font-size:13px;white-space:nowrap}
+
+  /* gantt */
+  .gantt{--weeks:18;display:grid;grid-template-columns:minmax(110px,170px) repeat(var(--weeks),minmax(26px,1fr));gap:4px 2px;align-items:center;min-width:760px}
+  .gantt .wk{font-size:11px;color:var(--muted);text-align:center;line-height:1.2}
+  .gantt .lab{font-size:13px;font-weight:700;padding-right:8px;line-height:1.25}
+  .gantt .lab small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+  .gantt .bar{height:26px;border-radius:7px;background:var(--accent-bg);color:var(--on-accent);font-size:11px;font-weight:700;display:flex;align-items:center;padding:0 8px;white-space:nowrap;overflow:hidden}
+  .gantt .bar.pre{background:var(--teal);color:#08201D}
+  .gantt .bar.brk{background:repeating-linear-gradient(135deg,var(--surface-2) 0 6px,var(--line) 6px 12px);color:var(--muted)}
+  .gantt .bar.care{background:color-mix(in srgb,var(--teal) 35%,var(--surface));color:var(--fg)}
+  .gantt-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+
+  .cost td:nth-child(2),.cost td:nth-child(3),.cost th:nth-child(2),.cost th:nth-child(3){text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .cost tfoot td{font-weight:800;border-bottom:none}
+  .note{font-size:13px;color:var(--muted);margin:10px 0 0}
+
+  .risk td:first-child{font-weight:700}
+  .lvl{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;white-space:nowrap}
+  .lvl.h{background:color-mix(in srgb,var(--coral) 22%,transparent);color:var(--warn)}
+  .lvl.m{background:color-mix(in srgb,var(--amber) 25%,transparent);color:var(--accent)}
+  .lvl.l{background:color-mix(in srgb,var(--teal) 20%,transparent);color:var(--ok)}
+
+  .check{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .check li{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px}
+  .check li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border:2px solid var(--muted);border-radius:5px}
+  .callout{background:color-mix(in srgb,var(--amber) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--amber) 55%,transparent);border-radius:16px;padding:16px 18px}
+  .callout p{margin:0}
+  @media print{.site-head,.rv-bar{display:none}.page{padding-top:0}section{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<header class="site-head"><div class="in"><a class="brand" href="./"><img src="assets/dumo-icon.png" alt="">dumo <span class="chip">Design review</span></a><nav><a href="./">Hub</a><a href="plan.html" aria-current="page">Plan</a><a href="questions.html">Questions</a><a href="board.html">Screens</a><a href="app/">App prototype</a><a href="admin/">Admin</a><a href="design-system.html">Design system</a></nav></div></header>
+
+<main class="page">
+  <div class="hero" id="top">
+    <span class="eyebrow">Delivery plan · v1.0 · 9 Oct 2026</span>
+    <h1>The grand plan</h1>
+    <p class="lede">How we take Dumo from a clickable prototype to an Android app in the hands of 100 South African creators: one gated process, six paid milestones, and every milestone accepted on the client's own phone.</p>
+    <ul class="toc" aria-label="On this page">
+      <li><a href="#summary">Summary</a></li><li><a href="#process">Process</a></li><li><a href="#raci">Who does what</a></li><li><a href="#stack">Stack</a></li><li><a href="#architecture">Architecture</a></li><li><a href="#data">Data model</a></li><li><a href="#rules">Business rules</a></li><li><a href="#milestones">Milestones</a></li><li><a href="#timeline">Timeline</a></li><li><a href="#costs">Running costs</a></li><li><a href="#risks">Risks</a></li><li><a href="#cadence">Cadence &amp; QA</a></li><li><a href="#handover">Handover</a></li><li><a href="#security">Security</a></li>
+    </ul>
+  </div>
+
+  <section id="summary">
+    <h2>Summary</h2>
+    <p class="sub">A TikTok-style vertical video app for South African creators: post short videos, grow a following, and watch a test-money wallet fill up from views and gifts. Real payouts, iOS, LIVE and the Shop come in later phases.</p>
+    <div class="kpis">
+      <div class="kpi"><b>100</b><span>pilot creators plus their followers</span></div>
+      <div class="kpi"><b>Android 9+</b><span>Flutter, so iOS can follow from the same code</span></div>
+      <div class="kpi"><b>6</b><span>paid milestones, each tested on a real phone</span></div>
+      <div class="kpi"><b>13 wks</b><span>build, after 1 wk discovery + 2 wks design</span></div>
+      <div class="kpi"><b>&lt; 2 s</b><span>feed start on a mid-range phone on 4G</span></div>
+      <div class="kpi"><b>R0</b><span>real money moved in the pilot. Wallet is test money only.</span></div>
+    </div>
+  </section>
+
+  <section id="process">
+    <h2>Our process</h2>
+    <p class="sub">Each stage has an owner and a gate. Nothing moves forward until the gate is passed in writing, so we don't build the wrong thing.</p>
+    <div class="pipe">
+      <div class="stage"><span class="n">0</span><h3>Discovery</h3><p>We send our questions and design assumptions. The client answers on the <a href="questions.html">Questions</a> page.</p><span class="own">Owner: Solution architect + PM</span></div>
+      <div class="stage"><span class="n">1</span><h3>UX &amp; UI design</h3><p>A clickable prototype of every pilot screen, plus the admin dashboard. The client pins comments, and we do 2 review rounds.</p><span class="own">Owner: Senior designer</span></div>
+      <div class="stage"><span class="n">2</span><h3>Build M1–M6</h3><p>Flutter app, API and admin. Every milestone ends with "done when" tests on the client's phone.</p><span class="own">Owner: Tech lead + Flutter devs</span></div>
+      <div class="stage"><span class="n">3</span><h3>Pilot release</h3><p>Google Play closed testing under Dumo's account. 100 creators are invited, and we hand everything over.</p><span class="own">Owner: PM + QA</span></div>
+      <div class="stage"><span class="n">4</span><h3>Hypercare</h3><p>2 weeks of fast bug fixes and monitoring while the pilot runs live.</p><span class="own">Owner: Tech lead</span></div>
+    </div>
+    <div class="gates">
+      <div class="gate">◆ Gate A: every "Blocks design" question answered</div>
+      <div class="gate">◆ Gate B: design signed off. Changes after this go through change control.</div>
+      <div class="gate">◆ Gate C: each milestone accepted within 5 working days</div>
+      <div class="gate">◆ Gate D: handover checklist signed</div>
+    </div>
+  </section>
+
+  <section id="raci">
+    <h2>Who does what</h2>
+    <p class="sub">R = does the work · A = accountable, signs off · C = consulted · I = kept informed.</p>
+    <div class="table-wrap">
+      <table class="raci">
+        <thead><tr><th>Activity</th><th>Client<br>(BP Mhlanga)</th><th>Solution architect</th><th>Senior designer</th><th>PM</th><th>Flutter devs</th><th>QA</th></tr></thead>
+        <tbody>
+          <tr><td>Discovery questions &amp; answers</td><td class="A">A</td><td class="R">R</td><td>C</td><td class="R">R</td><td>I</td><td>I</td></tr>
+          <tr><td>UX flows &amp; UI design</td><td class="A">A</td><td>C</td><td class="R">R</td><td>C</td><td>C</td><td>I</td></tr>
+          <tr><td>Technical plan, stack, cost estimate</td><td class="A">A</td><td class="R">R</td><td>I</td><td>C</td><td>C</td><td>I</td></tr>
+          <tr><td>Accounts in the company's name</td><td class="A">A</td><td class="R">R</td><td>–</td><td class="R">R</td><td>I</td><td>–</td></tr>
+          <tr><td>App &amp; API build</td><td>I</td><td class="A">A</td><td>C</td><td>I</td><td class="R">R</td><td>C</td></tr>
+          <tr><td>Admin dashboard build</td><td>I</td><td class="A">A</td><td>C</td><td>I</td><td class="R">R</td><td>C</td></tr>
+          <tr><td>Milestone testing &amp; acceptance</td><td class="A">A</td><td>C</td><td>C</td><td class="R">R</td><td>C</td><td class="R">R</td></tr>
+          <tr><td>Status updates (Mon/Thu) &amp; demos</td><td>I</td><td>C</td><td>I</td><td class="A">A</td><td>C</td><td>C</td></tr>
+          <tr><td>Change requests</td><td class="A">A</td><td>C</td><td>C</td><td class="R">R</td><td>I</td><td>I</td></tr>
+          <tr><td>Play release &amp; handover</td><td class="A">A</td><td class="R">R</td><td>I</td><td class="R">R</td><td class="R">R</td><td class="R">R</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="stack">
+    <h2>Proposed stack</h2>
+    <p class="sub">Our recommendation keeps data and compute in Johannesburg wherever possible, for speed and POPIA. Every library is MIT, Apache 2.0 or BSD and will be listed in the README.</p>
+    <div class="table-wrap">
+      <table class="stack">
+        <thead><tr><th>Area</th><th>Recommended</th><th>Why</th><th>Alternative</th></tr></thead>
+        <tbody>
+          <tr><td>App</td><td><span class="rec">Rec.</span>Flutter (Dart), Android 9+ (API 28)</td><td>One codebase, so iOS follows later. Smooth video on low-end Android. Strong tooling for paged feeds.</td><td>React Native (Expo)</td></tr>
+          <tr><td>Video player</td><td><span class="rec">Rec.</span><code>video_player</code> / ExoPlayer (Media3) with HLS</td><td>Adaptive bitrate. We preload the next 1–2 videos and cap resolution when Data Saver is on.</td><td><code>better_player_plus</code></td></tr>
+          <tr><td>Cloud &amp; region</td><td><span class="rec">Rec.</span>Google Cloud <b>africa-south1 (Johannesburg)</b></td><td>A full cloud region inside South Africa, close to users, which keeps POPIA simple.</td><td>Supabase. It is fast to build on, but it has no South African region at the time of writing, so data would sit in the EU. This is a trade-off for the client to decide.</td></tr>
+          <tr><td>Auth</td><td><span class="rec">Rec.</span>Firebase Authentication (phone OTP)</td><td>Ready-made SMS OTP for cellphone sign-up, with abuse protection (Play Integrity, rate limits). The auth service itself is global.</td><td>Own OTP flow over Clickatell (SA SMS provider)</td></tr>
+          <tr><td>API</td><td><span class="rec">Rec.</span>Cloud Run, TypeScript/Node (Fastify)</td><td>Scales to zero and is cheap for a pilot. One documented REST API serves both the app and the admin dashboard.</td><td>Supabase Edge Functions</td></tr>
+          <tr><td>Database</td><td><span class="rec">Rec.</span>Cloud SQL for PostgreSQL (africa-south1)</td><td>Relational data suits the wallet ledger, follows and reports. SQL makes auditing easy.</td><td>Firestore (harder for ledger and reports)</td></tr>
+          <tr><td>Files</td><td><span class="rec">Rec.</span>Cloud Storage (africa-south1)</td><td>Profile photos and thumbnails. Signed URLs for upload.</td><td>Supabase Storage</td></tr>
+          <tr><td>Video</td><td><span class="rec">Rec.</span>Mux Video</td><td>Adaptive HLS, a low-bitrate rendition for Data Saver, a 60 s cap enforced on upload, and webhooks when a video is ready. <b>Residency note:</b> stored in US/EU and delivered via a global CDN. This needs a POPIA s72 cross-border clause.</td><td>Cloudflare Stream</td></tr>
+          <tr><td>Admin dashboard</td><td><span class="rec">Rec.</span>Next.js (React) on Cloud Run</td><td>Web dashboard for users, videos, reports, removals, suspensions and the rand-per-1,000-views setting. Admin roles are checked on the server.</td><td>Firebase Hosting + React SPA</td></tr>
+          <tr><td>Crashes &amp; analytics</td><td><span class="rec">Rec.</span>Firebase Crashlytics + minimal analytics</td><td>Proves the "15 min with no crashes" test. We only collect the events we need.</td><td>Sentry (self-hosted)</td></tr>
+          <tr><td>CI/CD</td><td><span class="rec">Rec.</span>GitHub Actions → Play internal testing</td><td>Every merge to <code>main</code> builds a signed AAB. Secrets are stored in GitHub/Cloud Secret Manager.</td><td>Codemagic</td></tr>
+          <tr><td>Languages</td><td><span class="rec">Rec.</span>Flutter <code>intl</code> with ARB files</td><td>All app text lives in one <code>app_en.arb</code>, ready for isiZulu, isiXhosa, Afrikaans and other languages later.</td><td>–</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <h2>Architecture</h2>
+    <p class="sub">The app never talks to the database directly. Every request goes through the API, which checks auth and roles. Video goes straight from the phone to the video service and plays back from a CDN.</p>
+    <div class="diagram" role="img" aria-label="Architecture: the Android app and admin web call the Cloud Run API in Johannesburg, which uses Postgres and Cloud Storage. Videos upload directly to Mux and stream back to the app via CDN. Mux sends webhooks to the API.">
+      <svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor" opacity=".55"/></marker></defs>
+        <rect class="zone" x="262" y="20" width="356" height="300" rx="16"/>
+        <text class="zl" x="278" y="42">Google Cloud · africa-south1 (Johannesburg)</text>
+
+        <rect class="box acc" x="20" y="70" width="190" height="72" rx="12"/>
+        <text class="t" x="36" y="100">Android app</text><text class="s" x="36" y="120">Flutter · Android 9+</text>
+        <rect class="box acc" x="20" y="232" width="190" height="72" rx="12"/>
+        <text class="t" x="36" y="262">Admin dashboard</text><text class="s" x="36" y="282">Next.js · web</text>
+
+        <rect class="box" x="290" y="70" width="140" height="72" rx="12"/>
+        <text class="t" x="306" y="100">Firebase Auth</text><text class="s" x="306" y="120">Phone OTP (SMS)</text>
+        <rect class="box teal" x="290" y="170" width="300" height="56" rx="12"/>
+        <text class="t" x="306" y="196">API · Cloud Run (TypeScript)</text><text class="s" x="306" y="214">auth check · roles · feed ranking · wallet ledger</text>
+        <rect class="box" x="290" y="250" width="140" height="56" rx="12"/>
+        <text class="t" x="306" y="275">PostgreSQL</text><text class="s" x="306" y="293">Cloud SQL</text>
+        <rect class="box" x="450" y="250" width="140" height="56" rx="12"/>
+        <text class="t" x="466" y="275">Cloud Storage</text><text class="s" x="466" y="293">photos · thumbs</text>
+        <rect class="box" x="450" y="70" width="140" height="72" rx="12"/>
+        <text class="t" x="466" y="100">Secret Mgr</text><text class="s" x="466" y="120">keys never in code</text>
+
+        <rect class="box" x="680" y="70" width="200" height="72" rx="12"/>
+        <text class="t" x="696" y="100">Mux Video</text><text class="s" x="696" y="120">transcode · HLS · 60 s cap</text>
+        <rect class="box" x="680" y="232" width="200" height="72" rx="12"/>
+        <text class="t" x="696" y="262">CDN</text><text class="s" x="696" y="282">adaptive + Data Saver rendition</text>
+        <rect class="box" x="20" y="340" width="190" height="44" rx="10"/>
+        <text class="t" x="36" y="367">Crashlytics</text>
+
+        <path class="ln" d="M210 100H290" marker-end="url(#ar)"/>
+        <path class="ln" d="M210 125C250 125 250 195 290 195" marker-end="url(#ar)"/>
+        <path class="ln" d="M210 268C250 268 250 210 290 210" marker-end="url(#ar)"/>
+        <path class="ln" d="M360 226V250" marker-end="url(#ar)"/>
+        <path class="ln" d="M520 226V250" marker-end="url(#ar)"/>
+        <path class="ln d" d="M210 85C420 30 560 30 680 95" marker-end="url(#ar)"/>
+        <path class="ln d" d="M780 142V232" marker-end="url(#ar)"/>
+        <path class="ln d" d="M680 120C640 140 620 170 590 185" marker-end="url(#ar)"/>
+        <path class="ln d" d="M780 304V350H240V138H212" marker-end="url(#ar)"/>
+        <path class="ln" d="M80 142V340" marker-end="url(#ar)"/>
+        <text class="s" x="630" y="160">webhook: ready</text>
+        <text class="s" x="790" y="190">publish</text>
+        <text class="s" x="300" y="368">HLS playback (low-bitrate when Data Saver is on)</text>
+        <text class="s" x="628" y="56">direct upload</text>
+      </svg>
+    </div>
+    <p class="scroll-hint">Solid lines are API calls. Dashed lines are video traffic. On a phone, scroll the diagram sideways.</p>
+  </section>
+
+  <section id="data">
+    <h2>Data model sketch</h2>
+    <p class="sub">Postgres with foreign keys and soft-delete flags. Deleting an account removes the user's videos from Mux and storage through a background job (POPIA right to erasure).</p>
+    <div class="model">
+      <div class="tbl"><b>users</b><code>id, phone_e164 (unique), dob, role (user|admin), status (active|suspended|deleted), created_at</code></div>
+      <div class="tbl"><b>profiles</b><code>user_id, handle (unique), display_name, bio, location, avatar_url, languages[], founding_creator, data_saver</code></div>
+      <div class="tbl"><b>videos</b><code>id, creator_id, mux_asset_id, playback_id, caption, language, hashtags[], duration_s, earn_enabled, status (processing|live|removed), like_count, comment_count, created_at</code></div>
+      <div class="tbl"><b>follows</b><code>follower_id, creator_id, created_at · PK(follower, creator)</code></div>
+      <div class="tbl"><b>likes</b><code>user_id, video_id, created_at · PK(user, video)</code></div>
+      <div class="tbl"><b>comments</b><code>id, video_id, user_id, body, status, created_at</code></div>
+      <div class="tbl"><b>views</b><code>id, video_id, viewer_id, watched_ms, qualified (bool), created_at · index(viewer, video, created_at)</code></div>
+      <div class="tbl"><b>gifts</b><code>id, video_id, sender_id, creator_id, gift_type, coin_value, creator_share_zar (70%), created_at · test coins only</code></div>
+      <div class="tbl"><b>wallet_ledger</b><code>id, account (creator|platform|test_coin_pool), user_id, entry_type (views|gift|subscription), amount_cents, ref_id, created_at · double-entry, test money</code></div>
+      <div class="tbl"><b>reports</b><code>id, reporter_id, target_type (video|user|comment), target_id, reason, note, status (open|actioned|dismissed), handled_by, handled_at</code></div>
+      <div class="tbl"><b>blocks</b><code>blocker_id, blocked_id, created_at</code></div>
+      <div class="tbl"><b>admin_settings</b><code>key, value, updated_by, updated_at · e.g. zar_per_1000_views, gift_creator_share</code></div>
+      <div class="tbl"><b>audit_log</b><code>id, actor_id, action, target, before, after, created_at · every admin action</code></div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <h2>Business rules</h2>
+    <p class="sub">These rules drive both the wallet and the spreadsheet check in Milestone 4. Values marked "assumption" need the client's confirmation (see <a href="questions.html">Questions</a>).</p>
+    <div class="rules">
+      <div class="rule"><b>Qualified view</b><p>Watched for at least 3 s, by someone who is not the creator, and not the same viewer on the same video within 30 minutes.</p><span class="chip">Assumption · confirm</span></div>
+      <div class="rule"><b>View earnings</b><p>(qualified views ÷ 1,000) × the admin's rand rate, rounded to the cent and credited to the ledger daily.</p><span class="chip">Rate set in admin</span></div>
+      <div class="rule"><b>Gifts</b><p>Viewers send gifts with free test coins. The creator's wallet shows 70% of the gift's rand value, and 30% goes to the platform ledger.</p><span class="chip teal">From brief</span></div>
+      <div class="rule"><b>Age</b><p>Date of birth at sign-up. Under 13 cannot join. Ages 13–17 can watch and post, but their wallet is locked with an "Earn from 18" message.</p><span class="chip teal">From brief</span></div>
+      <div class="rule"><b>No real money</b><p>No payment SDK in the build. Cash out shows "Coming soon", and every rand amount is labelled test money.</p><span class="chip teal">From brief</span></div>
+      <div class="rule"><b>For You ranking</b><p>score = likes × 2 + comments × 3 + qualified views ÷ 10, decayed by age (half-life 24 h). Videos from blocked users are never shown.</p><span class="chip">Assumption · confirm</span></div>
+    </div>
+  </section>
+
+  <section id="milestones">
+    <h2>Milestones</h2>
+    <p class="sub">The scope and "done when" tests are copied from the brief. Payment is released only when every test passes on the client's phone.</p>
+    <div class="table-wrap">
+      <table class="ms">
+        <thead><tr><th>#</th><th>Milestone</th><th>Budget</th><th>Weeks</th><th>Scope</th><th>Done when</th><th>Designed screens</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>Foundation</b></td><td>10%</td><td>2</td>
+            <td><ul><li>Written technical plan: stack, services, monthly running cost estimate</li><li>GitHub repo, hosting and accounts set up in the company's name</li><li>Sign-up and log-in with cellphone number and SMS code</li><li>Empty screens and bottom navigation matching the prototype: Home, Discover, Post, Wallet, Profile</li></ul></td>
+            <td><ul class="done"><li>The client installs a test build on their own Android phone</li><li>The client can sign up, log out and log back in with their number</li><li>All code is visible in the company's GitHub</li></ul></td>
+            <td><a href="app/#/welcome">Welcome</a><br><a href="app/#/phone">Phone</a><br><a href="app/#/otp">OTP</a></td></tr>
+          <tr><td>2</td><td><b>Video feed</b></td><td>20%</td><td>3</td>
+            <td><ul><li>Record or pick a video (up to 60 s), add a caption and language, post it</li><li>Vertical swipe feed with autoplay, likes, comments and share link</li><li>"For You" (newest and most liked) and "Following" tabs</li></ul></td>
+            <td><ul class="done"><li>5 test users can post videos and see each other's in the feed</li><li>Swiping, likes and comments work without crashes for 15 minutes of use</li><li>Video starts within about 2 seconds on 4G</li></ul></td>
+            <td><a href="app/#/feed">Feed</a><br><a href="app/#/post">Post</a><br><a href="app/#/feed?sheet=comments">Comments</a></td></tr>
+          <tr><td>3</td><td><b>Profiles and following</b></td><td>15%</td><td>2</td>
+            <td><ul><li>Profile page: photo, name, handle, bio, location, video grid, follower counts</li><li>Follow and unfollow, search for creators and hashtags</li><li>Data Saver switch that plays the low-bitrate stream</li></ul></td>
+            <td><ul class="done"><li>Following someone puts their videos in the Following tab</li><li>Search finds a creator by name and a video by hashtag</li><li>Data Saver visibly lowers video quality and data use</li></ul></td>
+            <td><a href="app/#/creator/thandi.moves">Creator</a><br><a href="app/#/discover">Discover</a><br><a href="app/#/me">My profile</a></td></tr>
+          <tr><td>4</td><td><b>Creator wallet (test money)</b></td><td>15%</td><td>2</td>
+            <td><ul><li>Count qualified views per video (exclude the creator's own and repeat views within a short time)</li><li>Wallet screen with earnings by views, gifts and subscribers, shown in rand</li><li>Test gifts that viewers can send with fake coins; creator sees 70% of each gift in the wallet</li><li>Admin setting for the rand value per 1,000 views</li></ul></td>
+            <td><ul class="done"><li>Views and test gifts update the wallet correctly, checked against a spreadsheet</li><li>No real payment can be made from the app</li></ul></td>
+            <td><a href="app/#/wallet">Wallet</a><br><a href="app/#/feed?sheet=gift">Gift</a><br><a href="admin/">Admin settings</a></td></tr>
+          <tr><td>5</td><td><b>Safety and admin</b></td><td>15%</td><td>2</td>
+            <td><ul><li>Report a video or user, block a user, delete own videos and account</li><li>Admin web dashboard: see users and videos, view reports, remove content, suspend accounts</li><li>Age check at sign-up (13+ to use, 18+ to earn) and community guidelines screen</li></ul></td>
+            <td><ul class="done"><li>A reported video appears in the dashboard and can be removed in under a minute</li><li>A deleted account and its videos are gone from the app</li></ul></td>
+            <td><a href="app/#/feed?sheet=report">Report</a><br><a href="app/#/age">Age check</a><br><a href="admin/">Admin</a></td></tr>
+          <tr><td>6</td><td><b>Pilot release and handover</b></td><td>25%</td><td>2</td>
+            <td><ul><li>Fix all bugs found in milestones 1 to 5</li><li>Release on Google Play under the Dumo The Fame developer account (closed or open testing)</li><li>Handover: README, list of all accounts and services, a 1-hour recorded walkthrough of the code</li></ul></td>
+            <td><ul class="done"><li>100 pilot creators can install Dumo from Google Play</li><li>An independent developer reviews the code and confirms the README is enough to run it</li><li>All passwords and access are confirmed in the client's hands</li></ul></td>
+            <td><a href="#handover">Handover list</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <h2>Timeline</h2>
+    <p class="sub">Kickoff Monday 12 October 2026. M1 setup (repo, accounts, auth) runs alongside design, because it doesn't depend on visual sign-off. We pause over the December holidays, and each 5-day acceptance window overlaps the start of the next milestone.</p>
+    <div class="gantt-wrap">
+      <div class="gantt" id="gantt" aria-label="Gantt timeline"></div>
+    </div>
+    <div class="table-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Phase</th><th>Start</th><th>End</th><th>Demo &amp; acceptance</th></tr></thead>
+        <tbody id="dates"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="costs">
+    <h2>Monthly running costs (estimate)</h2>
+    <p class="sub">Pilot assumptions: 100 creators, about 2,000 viewers, 3,000 videos stored (about 30 s average), 500,000 minutes watched a month, 1,500 OTP SMS a month. Prices are list prices converted at about R18/$. We confirm them with real quotes in Milestone 1.</p>
+    <div class="table-wrap">
+      <table class="cost">
+        <thead><tr><th>Item</th><th>USD / month</th><th>ZAR / month</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Video: encode, store, stream (Mux)</td><td>$150 – $450</td><td>R2,700 – R8,100</td><td>Delivery is the biggest cost. Data Saver and a 720p cap pull it toward the lower end.</td></tr>
+          <tr><td>API (Cloud Run)</td><td>$0 – $25</td><td>R0 – R450</td><td>Scales to zero, and the free tier covers most of the pilot</td></tr>
+          <tr><td>Database (Cloud SQL Postgres, small)</td><td>$30 – $70</td><td>R540 – R1,260</td><td>Includes daily backups</td></tr>
+          <tr><td>Storage + egress (photos, thumbnails)</td><td>$5 – $20</td><td>R90 – R360</td><td></td></tr>
+          <tr><td>SMS OTP</td><td>$40 – $120</td><td>R720 – R2,160</td><td>Per-SMS rates to SA numbers vary. Clickatell may be cheaper locally.</td></tr>
+          <tr><td>Admin dashboard hosting</td><td>$0 – $10</td><td>R0 – R180</td><td>Cloud Run</td></tr>
+          <tr><td>Crash reporting &amp; monitoring</td><td>$0 – $10</td><td>R0 – R180</td><td>Crashlytics is free, plus Cloud Monitoring</td></tr>
+          <tr><td>Domain &amp; company email</td><td>$8 – $20</td><td>R144 – R360</td><td>If not already owned</td></tr>
+        </tbody>
+        <tfoot><tr><td>Total per month</td><td>$233 – $725</td><td>R4,200 – R13,000</td><td></td></tr></tfoot>
+      </table>
+    </div>
+    <p class="note">One-off: Google Play developer registration $25 (about R450). An organisation account needs a D-U-N-S number, which is free but can take up to 30 days, so we start it in week 1. Real-money features (PayShap, coin purchases) add payment-provider fees in a later phase.</p>
+  </section>
+
+  <section id="risks">
+    <h2>Risks &amp; mitigations</h2>
+    <div class="table-wrap">
+      <table class="risk">
+        <thead><tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Video streaming costs grow faster than expected</td><td><span class="lvl h">High</span></td><td>Cap at 720p, use a low-bitrate default on cellular, preload only 1–2 videos, set budget alerts at 50/80/100%, review the cost dashboard weekly.</td></tr>
+          <tr><td>OTP SMS delivery or cost problems in SA</td><td><span class="lvl m">Medium</span></td><td>Test on Vodacom, MTN, Cell C and Telkom in M1. Rate-limit OTP requests. Keep Clickatell as a fallback. Allow a "resend code" after 30 s.</td></tr>
+          <tr><td>POPIA compliance and data leaving SA</td><td><span class="lvl m">Medium</span></td><td>Data and compute in Johannesburg. Collect only what we need. Sign a data processing agreement with the video provider (s72). Account deletion really deletes. Privacy policy agreed with the client.</td></tr>
+          <tr><td>Minors' safety (13–17 year olds)</td><td><span class="lvl h">High</span></td><td>Age gate at sign-up, earning locked under 18, reporting and blocking everywhere, admin removal in under a minute, community guidelines accepted at sign-up.</td></tr>
+          <tr><td>Slow performance on low-end Android</td><td><span class="lvl m">Medium</span></td><td>Test on budget devices weekly, use HLS with a small first segment, cache thumbnails, profile in release mode, set a 2 s start budget in QA.</td></tr>
+          <tr><td>Scope creep from features the prototype shows (PayShap, Subscribe, LIVE, Go Global, cross-posting)</td><td><span class="lvl h">High</span></td><td>These are marked "Coming soon" or hidden in the pilot design and listed as decisions in Questions. Any change needs a written change request with price and time.</td></tr>
+          <tr><td>Google Play policy for user-generated content apps</td><td><span class="lvl m">Medium</span></td><td>Policy requires in-app reporting, blocking, moderation and a published content policy, all built in M5. We complete the data safety form and content rating questionnaire early.</td></tr>
+          <tr><td>Slow client acceptance holds up payments and the schedule</td><td><span class="lvl l">Low</span></td><td>Test scripts sent with every build, 15-min demo calls, a 5-working-day window, and acceptance overlapping the next milestone.</td></tr>
+          <tr><td>Company accounts not ready (Play, cloud billing, D-U-N-S)</td><td><span class="lvl m">Medium</span></td><td>Account checklist in week 1. The client owns every account, and we are invited with access only.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="cadence">
+    <h2>Cadence, quality and Definition of Done</h2>
+    <div class="grid3">
+      <div class="card"><h3>Communication</h3><ul><li>Written update every <b>Monday and Thursday</b>: done, next, blockers</li><li><b>15-minute demo</b> call at the end of each milestone</li><li>Feature questions go to BP Mhlanga before we guess</li><li>Code pushed to the company's GitHub at least twice a week</li></ul></div>
+      <div class="card"><h3>Acceptance</h3><ul><li>The client has <b>5 working days</b> to test each milestone</li><li>Bugs found are fixed before payment</li><li>Payment is released through Fiverr milestones once every "done when" test passes</li><li>Scope changes are agreed in writing, with price and time, before work starts</li></ul></div>
+      <div class="card"><h3>Definition of Done</h3><ul><li>Matches the signed-off design</li><li>Strings are in the ARB file, with no hard-coded text</li><li>No secrets in code, and CI is green</li><li>Tested on the device matrix and on throttled 4G</li><li>README updated, libraries listed with their licences</li></ul></div>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card"><h3>Test devices</h3><ul><li>Samsung Galaxy A05 (entry level, Android 13/14)</li><li>Samsung Galaxy A15 (mid-range, our 2 s benchmark)</li><li>Xiaomi Redmi 12</li><li>Hisense or Infinix (low-end)</li><li>One Android 9 device (minimum version)</li></ul></div>
+      <div class="card"><h3>QA checks per milestone</h3><ul><li>Throttled 4G profile: video start ≤ 2 s on the A15</li><li>15-minute swipe, like and comment session with no crashes (Crashlytics)</li><li>Wallet results match the client's spreadsheet to the cent (M4)</li><li>Report, then remove in under 60 s, timed (M5)</li><li>Data use measured with Data Saver on and off (M3)</li></ul></div>
+    </div>
+  </section>
+
+  <section id="handover">
+    <h2>Final handover checklist</h2>
+    <ul class="check">
+      <li>All code in the company GitHub, latest version pushed</li>
+      <li>README covers setup, running locally, releasing and costs</li>
+      <li>Every account and service listed, owned by the company, your access removed</li>
+      <li>Recorded code walkthrough delivered</li>
+      <li>Signed confirmation that all work belongs to Dumo The Fame (Pty) Ltd</li>
+    </ul>
+  </section>
+
+  <section id="security">
+    <h2>Security &amp; ownership</h2>
+    <div class="callout">
+      <p><b>Dumo The Fame (Pty) Ltd owns everything:</b> code, designs, databases and accounts. Google Play, Google Cloud, Mux, the SMS provider and GitHub are opened in the company's name and paid by the company, and the team only gets access. No passwords, API keys or secrets in the repository: they live in Secret Manager and GitHub Actions secrets. Admin actions are written to an audit log. Only open-source libraries with commercial-friendly licences (MIT, Apache 2.0, BSD) are used.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var start = new Date(2026, 9, 12); // Mon 12 Oct 2026
+  var W = 18;
+  var rows = [
+    { name:'Discovery', sub:'Questions & answers', from:1, len:1, cls:'pre' },
+    { name:'UX & UI design', sub:'2 review rounds', from:2, len:2, cls:'pre' },
+    { name:'M1 Foundation', sub:'10% · 2 wks', from:2, len:2 },
+    { name:'M2 Video feed', sub:'20% · 3 wks', from:4, len:3 },
+    { name:'M3 Profiles', sub:'15% · 2 wks', from:7, len:2 },
+    { name:'M4 Wallet', sub:'15% · 2 wks', from:9, len:2 },
+    { name:'Holiday break', sub:'21 Dec – 1 Jan', from:11, len:2, cls:'brk' },
+    { name:'M5 Safety & admin', sub:'15% · 2 wks', from:13, len:2 },
+    { name:'M6 Pilot release', sub:'25% · 2 wks', from:15, len:2 },
+    { name:'Hypercare', sub:'2 wks', from:17, len:2, cls:'care' }
+  ];
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function wkStart(i){ var d = new Date(start); d.setDate(d.getDate() + (i-1)*7); return d; }
+  function fmt(d){ return d.getDate() + ' ' + MON[d.getMonth()] + (d.getFullYear() !== 2026 ? ' ' + d.getFullYear() : ''); }
+  var g = document.getElementById('gantt');
+  var html = '<div></div>';
+  for (var i = 1; i <= W; i++){ var d = wkStart(i); html += '<div class="wk">W' + i + '<br>' + d.getDate() + ' ' + MON[d.getMonth()] + '</div>'; }
+  rows.forEach(function(r, n){
+    var row = n + 2;
+    html += '<div class="lab" style="grid-row:' + row + ';grid-column:1">' + r.name + '<small>' + r.sub + '</small></div>';
+    html += '<div class="bar ' + (r.cls || '') + '" style="grid-row:' + row + ';grid-column:' + (r.from + 1) + ' / span ' + r.len + '" title="' + r.name + '">' + r.sub + '</div>';
+  });
+  g.innerHTML = html;
+  var body = '';
+  rows.forEach(function(r){
+    if (r.cls === 'brk') return;
+    var s = wkStart(r.from), e = wkStart(r.from + r.len - 1); e.setDate(e.getDate() + 4);
+    var acc = r.cls === 'pre' ? (r.name === 'Discovery' ? 'Gate A: answers in' : 'Gate B: design sign-off') : r.cls === 'care' ? 'Pilot live' : 'Demo ' + fmt(e) + ' · accept within 5 working days';
+    body += '<tr><td><b>' + r.name + '</b></td><td>' + fmt(s) + '</td><td>' + fmt(e) + '</td><td>' + acc + '</td></tr>';
+  });
+  document.getElementById('dates').innerHTML = body;
+})();
+</script>
+</body>
+</html>
