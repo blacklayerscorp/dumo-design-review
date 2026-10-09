@@ -74,8 +74,8 @@
 <main class="page">
   <div class="hero" id="intro">
     <span class="eyebrow">Stage 0 · Discovery · for BP Mhlanga</span>
-    <h1>Questions before we lock the design</h1>
-    <p class="lede">The prototype is built on the assumptions below. For each question, either agree with our assumption or tell us your answer. Questions marked <b>Blocks design</b> need an answer before design sign-off. The others can wait until the build.</p>
+    <h1>10 quick questions</h1>
+    <p class="lede">Only the decisions we can’t make for you. Everything else follows your prototype. Each question shows our default, so you can just tick <b>Agree</b> or write a different answer.</p>
     <div class="how">
       <div><b>1 · Read the assumption</b>Each one links to the screen in the prototype where you can see it.</div>
       <div><b>2 · Agree or answer</b>Your answers save automatically in this browser as you go.</div>
@@ -90,7 +90,6 @@
         <button type="button" data-f="all" aria-pressed="true">All</button>
         <button type="button" data-f="p1" aria-pressed="false">Blocks design</button>
         <button type="button" data-f="p2" aria-pressed="false">Blocks build</button>
-        <button type="button" data-f="p3" aria-pressed="false">Nice to know</button>
         <button type="button" data-f="open" aria-pressed="false">Unanswered</button>
       </div>
       <div class="actions">
@@ -125,66 +124,25 @@
 (function(){
   var P = { p1:'Blocks design', p2:'Blocks build', p3:'Nice to know' };
   var GROUPS = [
-    { id:'scope', title:'Scope: prototype features outside this contract', items:[
-      ['Your prototype shows "Cash out with PayShap". Real payouts are not in this contract. Should the pilot show this button as "Coming soon", or hide it?', 'Creators will ask about money first, and what they see sets their expectations.', 'Wallet shows the balance as <b>test money</b>, with a disabled "Cash out · Coming soon" button.', 'app/#/wallet', 'p1'],
-      ['The creator profile shows "Subscribe · R29/mo". Subscriptions are a later phase. Show it disabled with "Soon", or hide it?', 'A visible but unusable button can confuse viewers.', 'Shown disabled with a "Soon" label. The subscriber earnings tile shows R0.00.', 'app/#/creator/thandi.moves', 'p1'],
-      ['"Subscribers only" posting and the "Subscribers only" profile tab depend on subscriptions. Remove them for the pilot?', 'This affects the Post screen and the profile tabs.', 'Hidden in the pilot.', 'app/#/post', 'p1'],
-      ['"Go Global" auto-translated subtitles: in this contract or a later phase?', 'Auto-translation needs a paid translation service and adds cost to every video.', 'Later phase. The toggle shows "Coming soon" and the profile banner is hidden.', 'app/#/post', 'p1'],
-      ['"Also post to TikTok and Instagram" with a "Watch on Dumo" link: in scope?', 'Posting to other platforms needs their APIs and app reviews, which takes weeks.', 'Later phase. Hidden in the pilot. The share sheet offers WhatsApp and other apps through Android\'s share menu.', 'app/#/feed?sheet=share', 'p1'],
-      ['The share toast mentions a "referral bonus". Is there a referral programme in the pilot?', 'A referral bonus needs tracking and a payout rule.', 'No referral bonus in the pilot. Share copies a link to the video.', 'app/#/feed?sheet=share', 'p2']
+    { id:'scope', title:'Scope and contract', items:[
+      ['Is the iPhone (iOS) app part of this $9k contract, or a later phase? In our chat you said Android and iOS, but the brief says iOS comes later.', 'This decides the price, the timeline and what we build first.', 'Android in this contract. iOS (SwiftUI, reusing the shared code) is quoted separately afterwards.', 'index.html', 'p1'],
+      ['Which company should own every account: Dumo The Fame (Pty) Ltd or BSCH Holdings?', 'Google Play, the D-U-N-S number, GitHub and billing must all be in the correct legal name.', 'Dumo The Fame (Pty) Ltd.', 'index.html', 'p1'],
+      ['The remaining screens (sign-up/log-in, comments, search, settings, reporting, admin dashboard) are designed in this clickable prototype. Can it serve as the design sign-off, or do you also need Figma files?', 'Figma files would be a separate design quote and add about a week before the build.', 'This clickable prototype is the design sign-off. No separate Figma files.', 'board.html', 'p1'],
+      ['Your prototype shows features that are outside this contract: PayShap cash-out, subscriptions, Go Global subtitles, posting to TikTok and Instagram, the Mzansi tab and the referral bonus. Should we hide them in the pilot?', 'Buttons that don\'t work yet confuse creators.', 'All hidden in the pilot. The wallet shows "Cash out · coming after the pilot". You can preview them in the prototype with "Show later-phase features".', 'app/#/wallet', 'p1'],
+      ['Push notifications (new follower, like, comment) were optional in your first brief. Include them in the pilot?', 'They bring creators back to the app, but add a few days of work.', 'Yes, basic push for followers, likes and comments.', 'app/#/feed', 'p2']
     ]},
-    { id:'feed', title:'Feed & content', items:[
-      ['What is the "Mzansi" tab? For example, trending in South Africa, or local-language content?', 'It is a third feed with its own ranking rule, which the brief does not cover.', 'Kept as a tab showing trending videos from SA creators (most liked in the last 48 h). Can be removed if not needed.', 'app/#/feed', 'p1'],
-      ['For You ranking: are "newest and most liked" equally important? Should comments and views count?', 'This sets the ranking formula we test in M2.', 'Engagement score (likes ×2, comments ×3, views ÷10) with a 24 h half-life.', 'plan.html#rules', 'p2'],
-      ['Is there a minimum video length (e.g. 3 s), as well as the 60 s maximum?', 'Very short clips can be used to farm views.', 'Minimum 3 s, maximum 60 s. The recorder stops automatically at 60 s.', 'app/#/post', 'p2'],
-      ['Which languages can creators tag a video with? All 11 official languages plus SA Sign Language?', 'This sets the language picker and future search filters.', 'English, isiZulu, isiXhosa, Afrikaans, Sesotho, Setswana, Sepedi, Xitsonga, siSwati, Tshivenda, isiNdebele, plus "Other".', 'app/#/post', 'p2'],
-      ['Your design shows "Original sound". Can creators add music in the pilot?', 'Music licensing is a serious copyright risk for user-generated video.', 'No music library. The video keeps its own audio, labelled "Original sound".', 'app/#/feed', 'p1'],
-      ['Can comments be turned off by a creator, or deleted by the creator on their own videos?', 'This matters for safety and creator control.', 'Creators can delete comments on their own videos. Comments cannot be turned off in the pilot.', 'app/#/feed?sheet=comments', 'p3']
+    { id:'money', title:'Earnings (test money in the pilot)', items:[
+      ['Please confirm the earning numbers: R3.50 per 1,000 qualified views, where a qualified view is watched at least 3 seconds, not the creator\'s own, and once per viewer every 30 minutes.', 'Every wallet test in Milestone 4 is checked against these numbers. The rate can be changed later in the admin dashboard.', 'R3.50 per 1,000 qualified views, 3-second minimum, 30-minute repeat window.', 'app/#/wallet?sheet=explain', 'p2'],
+      ['Gift prices and split: Protea R2, Vuvuzela R10, Gold crown R50, with the creator getting 70% (as in the brief). In our chat you mentioned 80/20 for subscriptions. Is that right: 70% for gifts, 80% for subscriptions?', 'The split is built into the wallet maths.', 'Gifts: the creator gets 70%. Subscriptions (later phase): the creator gets 80%.', 'app/#/feed?sheet=gift', 'p2']
     ]},
-    { id:'auth', title:'Sign-up, login & age', items:[
-      ['Only South African numbers (+27), or other countries too?', 'This affects SMS cost, fraud risk and the phone number input.', 'South Africa (+27) only.', 'app/#/phone', 'p2'],
-      ['Age check: is a self-declared date of birth enough for the pilot, or do you need ID verification?', 'ID checks need a third-party service, which adds cost and time.', 'Self-declared date of birth. Under 13 is blocked. Ages 13–17 can use the app, but earning is locked until 18.', 'app/#/age', 'p1'],
-      ['For users aged 13–17, do you need parental consent (POPIA treats under-18s as children)?', 'This is a legal requirement. It may add a consent step or limit what minors can do.', 'Parent or guardian consent is confirmed with a checkbox. Please confirm with your legal adviser.', 'app/#/age', 'p1'],
-      ['Handle rules: length, allowed characters, and can a handle be changed?', 'This affects sign-up validation and profile links.', '3–24 characters, using a–z, 0–9, "." and "_". Can be changed once every 30 days.', 'app/#/profile-setup', 'p3'],
-      ['Should users stay logged in until they log out, or be logged out after a period?', 'This is a trade-off between security and convenience, and it costs SMS.', 'Users stay logged in until they log out. Each new login sends a new SMS code.', 'app/#/settings', 'p3']
-    ]},
-    { id:'wallet', title:'Wallet (test money)', items:[
-      ['What starting rand value per 1,000 qualified views should we put in the admin setting?', 'All wallet test results are calculated from this number.', 'R3.50 per 1,000 qualified views (a placeholder only).', 'admin/', 'p2'],
-      ['Qualified view: do you agree with "watched at least 3 s, not the creator, and not the same viewer within 30 minutes"?', 'This is the core rule of the M4 spreadsheet check.', 'At least 3 s, 30-minute repeat window.', 'plan.html#rules', 'p2'],
-      ['Confirm the gift catalogue for the pilot: Protea R2, Vuvuzela R10, Gold crown R50?', 'This sets the gift sheet and the 70% calculation (R1.40 / R7.00 / R35.00).', 'Those three gifts, paid in free test coins.', 'app/#/feed?sheet=gift', 'p1'],
-      ['How do test coins reach viewers? For example, every new user gets free test coins, with a top-up button for testing?', 'Viewers need coins to test gifting.', 'Every account starts with 500 test coins (1 coin = R0.10), with a "Get 500 free test coins" button.', 'app/#/coins', 'p1'],
-      ['Should the "Subscribers" earnings tile appear in the pilot even though it will always show R0?', 'The brief asks for earnings broken down by views, gifts and subscribers.', 'Shown with R0.00 and a "Coming soon" label.', 'app/#/wallet', 'p2'],
-      ['What earns the "Founding Creator" badge? All 100 pilot creators, or picked by an admin?', 'This decides whether admins need a control for the badge.', 'All pilot creators get it. Admins can switch it on or off per user.', 'app/#/creator/thandi.moves', 'p3']
-    ]},
-    { id:'safety', title:'Safety & moderation', items:[
-      ['Who moderates reports during the pilot, and how fast should reports be handled?', 'This sets admin roles and the alerting we build.', 'Your team uses the admin dashboard and aims to handle reports within 24 h. A daily email summarises open reports.', 'admin/', 'p2'],
-      ['Report reasons list: is this list right?', 'This sets the report sheet and dashboard filters.', 'Nudity or sexual content · Violence · Hate or harassment · Child safety · Spam or scam · Dangerous acts · Other.', 'app/#/feed?sheet=report', 'p1'],
-      ['Should a video be hidden automatically after a number of reports, before an admin reviews it?', 'This protects users at night and on weekends.', 'Hidden automatically after 3 reports from different users until an admin reviews it. A child-safety report hides it immediately.', 'admin/', 'p2'],
-      ['Who writes the community guidelines, privacy policy and terms of service text?', 'Google Play requires these, and the app shows them at sign-up.', 'You supply the final text. We use a clearly marked placeholder until then.', 'app/#/guidelines', 'p2'],
-      ['Should blocking someone also hide their comments, and stop them viewing your profile?', 'This defines what blocking does in the app.', 'Blocking hides each other\'s videos, comments and profiles both ways.', 'app/#/creator/thandi.moves', 'p3']
-    ]},
-    { id:'brand', title:'Brand & experience', items:[
-      ['App name on Google Play: "Dumo", or "Dumo The Fame"?', 'This is needed for the Play listing and the name under the app icon.', '"Dumo" on the phone. "Dumo – The Fame" on the Play listing.', 'index.html', 'p2'],
-      ['Is a dark-only app OK, or do you also want a light mode?', 'A light mode doubles the visual QA for each screen.', 'Dark only, as in your prototype.', 'app/#/feed', 'p1'],
-      ['English only at launch, with translations later?', 'All text sits in one file, so adding languages later is easy.', 'English only at launch.', 'app/#/settings', 'p3']
-    ]},
-    { id:'ops', title:'Accounts & operations', items:[
-      ['What name should the company GitHub organisation have, and who will be its owner?', 'Code is pushed there from week 1.', 'A new organisation called "dumothefame", owned by BP Mhlanga.', 'plan.html#security', 'p2'],
-      ['Does Dumo The Fame (Pty) Ltd have a Google Play developer account (organisation) and a D-U-N-S number?', 'D-U-N-S verification can take up to 30 days and could delay the pilot release.', 'Not yet. We will guide the set-up in week 1.', 'plan.html#costs', 'p2'],
-      ['Who provides the company card for cloud, video and SMS billing?', 'Accounts must be in the company\'s name and paid by the company.', 'You add a company card. We set budget alerts.', 'plan.html#costs', 'p2'],
-      ['Do you have a preferred SMS provider (e.g. Clickatell), or are you happy with Firebase phone auth?', 'This affects cost and whether codes arrive reliably on SA networks.', 'Firebase phone auth, with Clickatell as a fallback.', 'plan.html#stack', 'p3'],
-      ['Do you own a domain and company email (e.g. dumothefame.com) for share links and the Play listing?', 'Share links like dumo.app/v/123 need a domain.', 'dumothefame.com will be used for share links and support email.', 'app/#/feed?sheet=share', 'p3'],
-      ['Are you comfortable with videos stored by a global video service (US/EU) under a POPIA data agreement, while all other data stays in Johannesburg?', 'This is a data-residency decision for your company.', 'Yes, with a signed data processing agreement.', 'plan.html#stack', 'p2']
-    ]},
-    { id:'pilot', title:'Pilot logistics & commercial', items:[
-      ['How will the 100 pilot creators be invited? By a list of phone numbers or emails, or a public link?', 'Closed testing on Google Play needs testers\' Google account emails.', 'Closed testing with an email list you provide.', 'plan.html#milestones', 'p2'],
-      ['What support channel should pilot users have, e.g. a WhatsApp number or email?', 'We show it in Settings › Help.', 'A WhatsApp support number shown in Settings.', 'app/#/settings', 'p3'],
-      ['Please confirm the total budget and that payment runs through Fiverr milestones as described in the brief.', 'We need this to quote each milestone and agree dates.', 'Six Fiverr milestones split 10/20/15/15/15/25%.', 'plan.html#milestones', 'p3'],
-      ['Is the 12 October 2026 kickoff, with a December holiday break, acceptable?', 'This fixes every milestone date.', 'Yes. The pilot release is targeted for late January 2027.', 'plan.html#timeline', 'p2']
+    { id:'safety', title:'Safety and legal', items:[
+      ['Ages 13–17 can use the app but not earn. Is a self-declared date of birth enough, or does your legal adviser require parental consent for under-18s (POPIA)?', 'A parental consent step would change the sign-up screens.', 'Self-declared date of birth. Under 13 is blocked. No parental consent step.', 'app/#/age', 'p1'],
+      ['Who will moderate reports during the pilot, and how quickly? Should a video be hidden automatically after 3 reports?', 'This sets admin accounts and the auto-hide rule.', 'Your team moderates through the admin dashboard within 24 hours. A video is hidden automatically after 3 reports.', 'admin/#/reports', 'p2'],
+      ['Who writes the Terms, Privacy Policy and Community Guidelines: you or your lawyer, or should we draft them for your lawyer to approve?', 'Google Play requires them before release, and the app shows them at sign-up.', 'We draft them, and your lawyer approves them.', 'app/#/guidelines', 'p2']
     ]}
   ];
 
-  var KEY = 'dumo-answers-v1', mem = {};
+  var KEY = 'dumo-answers-v2', mem = {};
   function load(){ try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return mem; } }
   function save(d){ mem = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){} }
   var data = load();
