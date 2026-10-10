@@ -1,13 +1,13 @@
 /* Dumo design-review site: shared tokens + document-page styles.
    App prototype uses its own dark tokens (app/app.css) taken from the client prototype. */
 :root{
-  --amber:#F2A93B; --amber-deep:#A86A10; --teal:#2BB3A3; --teal-soft:#7FE0CF;
+  --amber:#F2A93B; --amber-deep:#9A5B00; --teal:#2BB3A3; --teal-soft:#7FE0CF;
   --coral:#E4572E; --ink:#17120C;
   --display:'Bricolage Grotesque','Arial Black',sans-serif;
   --body:'DM Sans','Segoe UI',Arial,sans-serif;
 
   --bg:#FAF6EC; --surface:#FFFFFF; --surface-2:#F3EDE0; --line:#E6DCC8;
-  --fg:#17120C; --muted:#6B5D49; --accent:#A86A10; --accent-bg:#F2A93B; --on-accent:#17120C;
+  --fg:#17120C; --muted:#6B5D49; --accent:#9A5B00; --accent-bg:#F2A93B; --on-accent:#17120C;
   --ok:#1E7F72; --warn:#B4541F; --info:#365FB8;
   --shadow:0 1px 2px rgba(23,18,12,.06),0 8px 24px rgba(23,18,12,.06);
   color-scheme:light;

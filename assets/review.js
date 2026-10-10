@@ -60,12 +60,12 @@
   .rv-pop{position:fixed;z-index:2147483002;width:300px;max-width:calc(100vw - 24px);background:#FFFDF8;border:1px solid #E6DCC8;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.35);padding:12px;display:flex;flex-direction:column;gap:8px}
   .rv-pop textarea,.rv-pop input,.rv-panel textarea{all:unset;box-sizing:border-box;width:100%;background:#fff;border:1px solid #D9CDB5;border-radius:10px;padding:8px 10px;font:14px 'DM Sans',Arial,sans-serif;color:#17120C}
   .rv-pop textarea{min-height:76px;white-space:pre-wrap}
-  .rv-pop textarea:focus,.rv-pop input:focus{border-color:#A86A10;box-shadow:0 0 0 2px rgba(242,169,59,.35)}
+  .rv-pop textarea:focus,.rv-pop input:focus{border-color:#9A5B00;box-shadow:0 0 0 2px rgba(242,169,59,.35)}
   .rv-row{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
   .rv-b{all:unset;cursor:pointer;height:32px;padding:0 12px;border-radius:9px;font:700 13px 'DM Sans',Arial,sans-serif;background:#F3EDE0;color:#17120C;display:inline-flex;align-items:center;gap:6px}
   .rv-b.p{background:#F2A93B}
   .rv-b.d{color:#B4361F}
-  .rv-b:focus-visible{outline:2px solid #A86A10}
+  .rv-b:focus-visible{outline:2px solid #9A5B00}
   .rv-msg{display:flex;flex-direction:column;gap:2px;padding:8px 0;border-bottom:1px solid #EFE6D4}
   .rv-msg:last-of-type{border-bottom:none}
   .rv-who{font-weight:700;font-size:13px}
@@ -77,7 +77,7 @@
   .rv-panel h2{margin:0;font:800 20px 'Bricolage Grotesque','Arial Black',sans-serif}
   .rv-panel .body{flex:1;overflow:auto;padding:8px 16px 24px}
   .rv-item{all:unset;box-sizing:border-box;display:flex;gap:10px;width:100%;padding:12px 0;border-bottom:1px solid #EFE6D4;cursor:pointer}
-  .rv-item:focus-visible{outline:2px solid #A86A10}
+  .rv-item:focus-visible{outline:2px solid #9A5B00}
   .rv-item .num{flex:none;width:26px;height:26px;border-radius:13px 13px 13px 3px;background:#F2A93B;display:flex;align-items:center;justify-content:center;font:800 11px 'DM Sans',Arial,sans-serif}
   .rv-item.res .num{background:#7FE0CF}
   .rv-item.res .rv-txt{color:#6B5D49;text-decoration:line-through}

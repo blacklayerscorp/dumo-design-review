@@ -177,7 +177,7 @@ input,select,textarea{font:inherit;color:inherit}
 .gift .ic{font-size:30px;line-height:1;height:40px;display:flex;align-items:center}
 .gift b{color:var(--accent);font-size:12px}
 .coins{display:inline-flex;align-items:center;gap:6px;font-weight:700;background:var(--panel);border-radius:999px;padding:5px 10px 5px 6px;font-size:13px}
-.coin{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE0A3,#F2A93B 60%,#A86A10);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);font-size:10px;font-weight:900;flex:none}
+.coin{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE0A3,#F2A93B 60%,#9A5B00);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);font-size:10px;font-weight:900;flex:none}
 .cmt{display:flex;gap:10px;padding:8px 0}
 .cmt .t{flex:1;min-width:0;font-size:14px}
 .cmt .t b{font-size:12.5px;color:var(--muted);font-weight:700;display:block}
