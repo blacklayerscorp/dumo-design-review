@@ -190,7 +190,7 @@
       '<div class="login" data-review-anchor="admin-login"><form class="card" id="loginForm" novalidate>' +
       '<img src="../assets/dumo-logo-light.png" alt="dumo — The Fame" style="display:block">' +
       '<div><h1 style="font-size:26px">Admin log in</h1><p style="margin:4px 0 0;color:var(--muted)">Moderation and pilot settings for Dumo.</p></div>' +
-      '<div id="step1" style="display:flex;flex-direction:column;gap:14px"><label class="f">Work email<input type="email" id="lEmail" value="bp.mhlanga@dumothefame.com" autocomplete="username" required></label>' +
+      '<div id="step1" style="display:flex;flex-direction:column;gap:14px"><label class="f">Work email<input type="email" id="lEmail" value="moderator@example.com" autocomplete="username" required></label>' +
       '<label class="f">Password<input type="password" id="lPass" value="prototype-pass" autocomplete="current-password" required></label></div>' +
       '<div id="step2" hidden style="display:flex;flex-direction:column;gap:10px"><span class="f" style="font-size:13px;font-weight:700;color:var(--muted)">6-digit code from your authenticator app</span><div class="otp" role="group" aria-label="6-digit code">' +
       [1,2,3,4,5,6].map(function(i){ return '<input inputmode="numeric" maxlength="1" aria-label="Digit ' + i + '" value="' + '481203'[i-1] + '">'; }).join('') + '</div></div>' +
